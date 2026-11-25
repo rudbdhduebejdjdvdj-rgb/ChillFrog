@@ -79,3 +79,15 @@ body{
 .hero,.section,.token,.join,footer,.header{position:relative}
 .story,.roadmap,.faq{isolation:isolate}
 .token,.join{isolation:isolate}
+
+
+/* ChillFrog peace + reggae-inspired wallpaper texture */
+body{
+ background-image:
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%23f2bd42' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' opacity='.30'%3E%3Ccircle cx='72' cy='72' r='30'/%3E%3Cpath d='M72 42v60M46 57l52 30M98 57L46 87'/%3E%3C/g%3E%3Cg opacity='.24' transform='translate(190 34)'%3E%3Cpath fill='%23e34b38' d='M30 0c-5 13-18 18-18 34 0 12 8 21 19 21s20-9 20-21C51 18 36 11 30 0z'/%3E%3Cpath fill='%23f2bd42' d='M30 14c-3 9-10 13-10 22 0 7 4 12 10 12s11-5 11-12c0-9-8-14-11-22z'/%3E%3C/g%3E%3Cg fill='none' stroke='%2378c94b' stroke-width='4' opacity='.28'%3E%3Cpath d='M76 224c-20-24-17-43 0-57 17 14 20 33 0 57zM76 224c-19-3-33-14-38-31 19-4 32 7 38 31zM76 224c19-3 33-14 38-31-19-4-32 7-38 31z'/%3E%3Cpath d='M76 224v23'/%3E%3C/g%3E%3Cg fill='none' stroke='%23e34b38' stroke-width='4' opacity='.25'%3E%3Ccircle cx='244' cy='236' r='24'/%3E%3Cpath d='M220 236h48M244 212v48M227 219l34 34M261 219l-34 34'/%3E%3C/g%3E%3C/svg%3E"),
+ radial-gradient(ellipse at 75% 18%,#294c2c 0,transparent 36%),
+ radial-gradient(ellipse at 10% 70%,#523322 0,transparent 30%),
+ var(--night);
+ background-size:320px 320px,auto,auto,auto;
+ background-attachment:fixed;
+}
