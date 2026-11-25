@@ -109,3 +109,16 @@ body{
 .stats-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:22px 0 8px;border-bottom:1px solid #f2bd4244;color:var(--pink);font:800 10px Syne,sans-serif;letter-spacing:1.5px}
 .stats-heading small{font:600 8px "Space Grotesk",sans-serif;color:#a996bd;letter-spacing:.7px;text-align:right}
 .stats-disclaimer{padding:14px 0 5px;color:#a996bd;font-size:10px;line-height:1.7}
+
+
+/* Highly visible market-statistics panel */
+.stats-panel{margin:22px 0 8px;padding:16px;border:1px solid #f2bd4280;border-radius:13px;background:linear-gradient(145deg,#27482c,#14291b);box-shadow:0 12px 32px #0005}
+.stats-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 0 13px;border:0;color:#f2bd42;font:800 11px Syne,sans-serif;letter-spacing:1.2px}
+.stats-heading small{font:600 8px "Space Grotesk",sans-serif;color:#d0d9b7;letter-spacing:.4px;text-align:right}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.stat-tile{display:flex;flex-direction:column;gap:7px;min-width:0;padding:13px 12px;border:1px solid #ffffff20;border-radius:9px;background:#0c1d13}
+.stat-tile span{font-size:8px;font-weight:700;letter-spacing:1px;color:#c0cba9}
+.stat-tile b{font:800 21px Syne,sans-serif;color:#fff4d7;overflow-wrap:anywhere}
+.stat-tile.stat-main{grid-column:1/-1;background:linear-gradient(100deg,#315d31,#1d3e25);border-color:#78c94b80}
+.stat-tile.stat-main b{font-size:32px;color:#f2bd42}
+.stats-disclaimer{padding:12px 1px 0;color:#c0cba9;font-size:9px;line-height:1.6}
