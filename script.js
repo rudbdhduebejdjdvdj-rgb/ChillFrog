@@ -58,7 +58,7 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
   if (!status || !target) return;
 
   if (!window.Jupiter || typeof window.Jupiter.init !== "function") {
-    status.textContent = "Jupiter could not be loaded. You can use the official Pump.fun link below.";
+    status.textContent = "Jupiter could not be loaded. Please refresh the page and try again.";
     status.classList.add("is-warning");
     return;
   }
@@ -78,13 +78,13 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
         status.classList.remove("is-warning");
       },
       onSwapError: () => {
-        status.textContent = "Jupiter could not complete this swap. Check liquidity, route availability and wallet balance, or use the official Pump.fun page.";
+        status.textContent = "Jupiter could not complete this swap. Check route availability, liquidity and your wallet balance, then try again.";
         status.classList.add("is-warning");
       }
     });
     status.textContent = "Jupiter swap is ready. Check every transaction detail in your wallet before signing.";
   } catch (error) {
-    status.textContent = "The swap interface could not start. Use the official Pump.fun link below.";
+    status.textContent = "The swap interface could not start. Please refresh the page and try again.";
     status.classList.add("is-warning");
   }
 })();
