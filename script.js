@@ -49,3 +49,42 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
     counters.forEach(animate);
   }
 })();
+
+
+// Jupiter Plugin: fixed CFROG output so visitors cannot accidentally select a lookalike token.
+(function initChillFrogSwap(){
+  const status = document.getElementById("jupiter-status");
+  const target = document.getElementById("jupiter-plugin");
+  if (!status || !target) return;
+
+  if (!window.Jupiter || typeof window.Jupiter.init !== "function") {
+    status.textContent = "Jupiter could not be loaded. You can use the official Pump.fun link below.";
+    status.classList.add("is-warning");
+    return;
+  }
+
+  try {
+    window.Jupiter.init({
+      displayMode: "integrated",
+      integratedTargetId: "jupiter-plugin",
+      defaultExplorer: "Solana Explorer",
+      formProps: {
+        initialInputMint: "So11111111111111111111111111111111111111112",
+        initialOutputMint: "5dfEAdnAXweREFoozFfVpENeoFcHFJcAuxZw6oYVpump",
+        fixedMint: "5dfEAdnAXweREFoozFfVpENeoFcHFJcAuxZw6oYVpump"
+      },
+      onSuccess: ({ txid }) => {
+        status.textContent = "Swap submitted. Verify its confirmation in Solana Explorer.";
+        status.classList.remove("is-warning");
+      },
+      onSwapError: () => {
+        status.textContent = "Jupiter could not complete this swap. Check liquidity, route availability and wallet balance, or use the official Pump.fun page.";
+        status.classList.add("is-warning");
+      }
+    });
+    status.textContent = "Jupiter swap is ready. Check every transaction detail in your wallet before signing.";
+  } catch (error) {
+    status.textContent = "The swap interface could not start. Use the official Pump.fun link below.";
+    status.classList.add("is-warning");
+  }
+})();
