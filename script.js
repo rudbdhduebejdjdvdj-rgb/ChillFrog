@@ -144,7 +144,7 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
   if(!intro) return;
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove();return;}
   document.body.classList.add("ash-revealing");
-  window.setTimeout(()=>{intro.remove();document.body.classList.remove("ash-revealing");},6800);
+  window.setTimeout(()=>{intro.remove();document.body.classList.remove("ash-revealing");},8200);
 })();
 
 // Fine ash particles scatter from the burning leaf and sweep across the page.
