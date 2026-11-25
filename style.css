@@ -190,3 +190,33 @@ body{
  .swap-panel-head{align-items:flex-start;flex-direction:column}
  #jupiter-plugin{min-height:620px}
 }
+
+
+/* Interactive Froggy mascot */
+.frog-hero{cursor:pointer;transform-origin:50% 60%;--eye-x:0px;--eye-y:0px;touch-action:manipulation;will-change:transform}
+.frog-eyes b{transform:translate(var(--eye-x),var(--eye-y));transition:transform .12s ease}
+.frog-hero:focus-visible{outline:3px solid #f2bd42;outline-offset:12px}
+.frog-hero.is-tapped{animation:froggyHop .68s cubic-bezier(.2,.85,.3,1)}
+.frog-hero.is-excited{animation:froggyExcited .85s ease-in-out}
+.frog-hero.is-excited .frog-smile{transform:scale(1.22);transform-origin:center;transition:transform .2s ease}
+@keyframes froggyHop{
+  0%,100%{transform:translateY(0) rotate(-7deg)}
+  22%{transform:translateY(-42px) rotate(5deg) scale(1.04)}
+  42%{transform:translateY(0) rotate(-9deg) scale(.98)}
+  58%{transform:translateY(-13px) rotate(-2deg)}
+  76%{transform:translateY(0) rotate(-7deg)}
+}
+@keyframes froggyExcited{
+  0%,100%{transform:translateY(0) rotate(-7deg)}
+  18%{transform:translateY(-19px) rotate(7deg)}
+  35%{transform:translateY(0) rotate(-10deg)}
+  52%{transform:translateY(-11px) rotate(5deg)}
+  70%{transform:translateY(0) rotate(-7deg)}
+}
+@media(hover:hover){
+  .frog-hero:hover{filter:brightness(1.08) drop-shadow(0 0 18px #f2bd4280)}
+}
+@media(prefers-reduced-motion:reduce){
+  .frog-hero.is-tapped,.frog-hero.is-excited{animation:none!important}
+  .frog-eyes b,.frog-smile{transition:none!important}
+}
