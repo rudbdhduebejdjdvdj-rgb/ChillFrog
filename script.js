@@ -136,3 +136,12 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
     link.addEventListener("click", () => play("is-excited"));
   });
 })();
+
+
+// Remove the intro overlay after its cinematic burn sequence.
+(function(){
+  const intro=document.getElementById("leaf-intro");
+  if(!intro) return;
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove();return;}
+  window.setTimeout(()=>{intro.remove();},3800);
+})();
