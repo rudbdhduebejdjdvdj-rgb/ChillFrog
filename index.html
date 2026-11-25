@@ -9,6 +9,24 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="leaf-intro" id="leaf-intro" aria-label="ChillFrog intro animation" role="presentation">
+  <div class="leaf-intro-glow"></div>
+  <div class="leaf-stage">
+    <svg class="intro-leaf" viewBox="0 0 360 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="leafFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#174d2b"/><stop offset=".55" stop-color="#78c94b"/><stop offset="1" stop-color="#c1e879"/></linearGradient>
+        <linearGradient id="burnFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff3d16"/><stop offset=".48" stop-color="#ff9d22"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
+      </defs>
+      <path class="leaf-body" d="M180 382 C145 332 56 293 48 205 C40 119 111 42 180 25 C249 42 320 119 312 205 C304 293 215 332 180 382Z" fill="url(#leafFill)" stroke="#b5e86c" stroke-width="5"/>
+      <path class="leaf-vein" d="M180 370 C178 265 180 154 180 43 M180 238 C142 196 108 159 78 119 M180 282 C225 231 266 177 292 126 M180 178 C148 139 130 104 119 76 M181 211 C214 165 236 119 245 81" fill="none" stroke="#d7f59b" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+      <path class="leaf-burn" d="M180 382 C145 332 56 293 48 205 C40 119 111 42 180 25 C249 42 320 119 312 205 C304 293 215 332 180 382Z" fill="none" stroke="url(#burnFill)" stroke-width="13" stroke-linecap="round" stroke-dasharray="1050" stroke-dashoffset="1050"/>
+      <path class="leaf-char" d="M180 382 C145 332 56 293 48 205 C40 119 111 42 180 25 C249 42 320 119 312 205 C304 293 215 332 180 382Z" fill="none" stroke="#20180e" stroke-width="7" stroke-dasharray="1050" stroke-dashoffset="1050" opacity="0"/>
+    </svg>
+    <div class="intro-flames"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="intro-wordmark">CHILL<span>FROG</span></div>
+  <div class="intro-caption">FEEL THE FLOW</div>
+</div>
 <div class="grain"></div>
 <header class="header"><a class="logo" href="#inicio"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="#historia">Our story</a><a href="#token">The token</a><a href="#comprar">Swap CFROG</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="#comunidad">Community</a><a href="tienda.html">Tienda</a><a class="nav-cta" href="#comunidad">Join the swamp ↗</a></nav></header>
 <main id="inicio">
