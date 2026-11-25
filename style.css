@@ -36,3 +36,15 @@ h1 span,h2 span{color:var(--lime)}
 .faq summary b{color:#78c94b}
 .disclaimer{background:#09190f;color:#b4c5a0}
 @media(prefers-reduced-motion:no-preference){.frog-hero{animation:bob 5s ease-in-out infinite}.sun{animation:spin 35s linear infinite}}
+
+
+/* Official community links */
+.social-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:28px auto 0}
+.btn-social{margin-top:15px;background:#fff4d7;color:#183b27}
+.social-links .btn{min-width:155px;text-align:center}
+.social-links .btn:hover{transform:translateY(-4px) scale(1.02)}
+.footer-social{display:flex;gap:18px;align-items:center}
+.footer-social a{color:var(--pink);font-size:11px;font-weight:700;text-decoration:none}
+.footer-social a:hover{color:var(--lime)}
+.header nav a:focus-visible,.btn:focus-visible,.footer-social a:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+@media(max-width:760px){.social-links{flex-direction:column;align-items:center}.social-links .btn{width:min(100%,280px)}.footer-social{width:100%;order:4}}
