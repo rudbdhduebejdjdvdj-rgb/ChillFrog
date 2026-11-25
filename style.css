@@ -243,7 +243,7 @@ body{
 @keyframes introGlow{0%{transform:scale(.45);opacity:.1}45%{transform:scale(1.1);opacity:1}100%{transform:scale(1.4);opacity:.1}}
 @keyframes leafReveal{0%{opacity:0;transform:translateY(55px) scale(.55) rotate(-24deg)}18%{opacity:1;transform:translateY(0) scale(1) rotate(7deg)}42%{transform:rotate(-3deg) scale(1.04);opacity:1}72%{opacity:1;filter:brightness(.95) blur(0)}100%{transform:scale(.82) rotate(0);opacity:0;filter:brightness(.05) blur(9px)}}
 @keyframes leafTremble{0%,100%{transform:rotate(0)}20%{transform:rotate(2deg)}40%{transform:rotate(-2deg)}60%{transform:rotate(1deg)}}
-@keyframes leafIgnite{0%{stroke-dashoffset:2600;opacity:0}15%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes leafIgnite{0%{stroke-dashoffset:5600;opacity:0}12%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
 @keyframes leafChar{0%,25%{stroke-dashoffset:1050;opacity:0}100%{stroke-dashoffset:0;opacity:.85}}
 @keyframes flamesRise{0%{opacity:0;transform:translateY(30px) scale(.7)}35%{opacity:1}100%{opacity:.9;transform:translateY(-32px) scale(1.15)}}
 @keyframes flameDance{from{transform:skewX(-8deg) scaleY(.82)}to{transform:skewX(9deg) scaleY(1.12)}}
