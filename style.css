@@ -223,11 +223,11 @@ body{
 
 
 /* Cinematic first-entry leaf burn intro */
-.leaf-intro{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#23492b 0%,#102719 48%,#07160d 100%);animation:introCurtain 3.65s cubic-bezier(.7,0,.2,1) forwards;pointer-events:none}
+.leaf-intro{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#23492b 0%,#102719 48%,#07160d 100%);animation:introCurtain 6.7s cubic-bezier(.7,0,.2,1) forwards;pointer-events:none}
 .leaf-intro-glow{position:absolute;width:min(75vw,620px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#f2bd4230 0%,#e34b3814 38%,transparent 70%);animation:introGlow 3.2s ease-in-out both}
-.leaf-stage{position:relative;width:min(54vw,310px);min-width:205px;filter:drop-shadow(0 15px 35px #0008);animation:leafReveal 3.35s cubic-bezier(.2,.7,.2,1) both}
+.leaf-stage{position:relative;width:min(68vw,390px);min-width:245px;filter:drop-shadow(0 15px 35px #0008);animation:leafReveal 5.9s cubic-bezier(.2,.7,.2,1) both}
 .intro-leaf{display:block;width:100%;height:auto;overflow:visible;transform-origin:50% 85%;animation:leafTremble 1.9s ease-in-out .6s both}\n.leaf-blade{fill:url(#leafFill);stroke:#b5e86c;stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round}
-.leaf-burn{animation:leafIgnite 2.2s ease-in .85s forwards;filter:drop-shadow(0 0 8px #ff6a20)}
+.leaf-burn{animation:leafIgnite 3.5s ease-in 1.25s forwards;filter:drop-shadow(0 0 9px #ff6a20)}
 .leaf-char{animation:leafChar 1.8s ease-in 1.25s forwards}
 .intro-flames{position:absolute;left:12%;right:12%;bottom:5%;height:48%;opacity:0;filter:blur(1px);animation:flamesRise 1.6s ease-in 1.55s forwards}
 .intro-flames i{position:absolute;bottom:0;width:22%;height:70%;border-radius:55% 45% 50% 50%;background:linear-gradient(to top,#ff3b12 0%,#ff9b22 52%,#ffe58a 85%,transparent 100%);transform-origin:50% 100%;filter:drop-shadow(0 0 12px #ff5b18);animation:flameDance .38s ease-in-out infinite alternate}
@@ -239,9 +239,9 @@ body{
 .intro-wordmark{position:relative;margin-top:18px;font:800 clamp(25px,5vw,42px)/1 Syne,sans-serif;letter-spacing:3px;color:#fff4d7;opacity:0;animation:wordmarkIn .7s ease 2.2s forwards}
 .intro-wordmark span{color:#f2bd42}
 .intro-caption{position:relative;margin-top:12px;color:#b8c9a9;font-size:9px;letter-spacing:5px;opacity:0;animation:wordmarkIn .6s ease 2.55s forwards}
-@keyframes introCurtain{0%,78%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+@keyframes introCurtain{0%,87%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
 @keyframes introGlow{0%{transform:scale(.45);opacity:.1}45%{transform:scale(1.1);opacity:1}100%{transform:scale(1.4);opacity:.1}}
-@keyframes leafReveal{0%{opacity:0;transform:translateY(55px) scale(.55) rotate(-24deg)}25%{opacity:1;transform:translateY(0) scale(1) rotate(7deg)}48%{transform:rotate(-4deg) scale(1.04)}100%{transform:scale(.88) rotate(0);opacity:.08;filter:brightness(.25) blur(5px)}}
+@keyframes leafReveal{0%{opacity:0;transform:translateY(55px) scale(.55) rotate(-24deg)}18%{opacity:1;transform:translateY(0) scale(1) rotate(7deg)}42%{transform:rotate(-3deg) scale(1.04);opacity:1}72%{opacity:1;filter:brightness(.95) blur(0)}100%{transform:scale(.82) rotate(0);opacity:0;filter:brightness(.05) blur(9px)}}
 @keyframes leafTremble{0%,100%{transform:rotate(0)}20%{transform:rotate(2deg)}40%{transform:rotate(-2deg)}60%{transform:rotate(1deg)}}
 @keyframes leafIgnite{0%{stroke-dashoffset:2600;opacity:0}15%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
 @keyframes leafChar{0%,25%{stroke-dashoffset:1050;opacity:0}100%{stroke-dashoffset:0;opacity:.85}}
@@ -250,3 +250,8 @@ body{
 @keyframes wordmarkIn{from{opacity:0;transform:translateY(12px);letter-spacing:8px}to{opacity:1;transform:translateY(0);letter-spacing:3px}}
 @media(max-width:600px){.leaf-stage{width:65vw}.intro-caption{letter-spacing:3px}}
 @media(prefers-reduced-motion:reduce){.leaf-intro{display:none!important}}
+
+.leaf-blade{fill:url(#leafFill);stroke:#a7d66c;stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 4px 5px #06170b88)}
+.ash-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+body.ash-revealing main,body.ash-revealing header,body.ash-revealing footer{animation:siteFromAsh 1.25s cubic-bezier(.18,.7,.2,1) both;animation-delay:5.15s}
+@keyframes siteFromAsh{0%{opacity:0;filter:blur(13px);transform:translateY(14px)}65%{opacity:1;filter:blur(2px)}100%{opacity:1;filter:blur(0);transform:none}}
