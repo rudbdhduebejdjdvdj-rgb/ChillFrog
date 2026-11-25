@@ -143,5 +143,17 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
   const intro=document.getElementById("leaf-intro");
   if(!intro) return;
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove();return;}
-  window.setTimeout(()=>{intro.remove();},3800);
+  document.body.classList.add("ash-revealing");
+  window.setTimeout(()=>{intro.remove();document.body.classList.remove("ash-revealing");},6800);
+})();
+
+// Fine ash particles scatter from the burning leaf and sweep across the page.
+(function(){
+ const canvas=document.getElementById("ash-canvas"), intro=document.getElementById("leaf-intro");
+ if(!canvas||!intro||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const ctx=canvas.getContext("2d");let w=0,h=0,particles=[],raf=0,start=0;
+ function resize(){const d=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=w*d;canvas.height=h*d;ctx.setTransform(d,0,0,d,0,0)}
+ function seed(){const count=Math.min(1500,Math.floor(w*h/650)),cx=w/2,cy=h*.47;for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2,r=18+Math.random()*115;particles.push({sx:cx+Math.cos(a)*r,sy:cy+Math.sin(a)*r*.82,tx:Math.random()*w,ty:Math.random()*h,size:.45+Math.random()*1.7,delay:Math.random()*.7,spin:Math.random()*8,alpha:.35+Math.random()*.65})}}
+ function frame(t){if(!start)start=t;const elapsed=(t-start)/1000;ctx.clearRect(0,0,w,h);if(elapsed>2.4){for(const p of particles){const q=Math.max(0,Math.min(1,(elapsed-2.4-p.delay)/2.2)),e=1-Math.pow(1-q,3),x=p.sx+(p.tx-p.sx)*e+Math.sin(elapsed*2+p.spin)*5,y=p.sy+(p.ty-p.sy)*e+Math.cos(elapsed*1.7+p.spin)*4;ctx.globalAlpha=p.alpha*(1-q*.82);ctx.fillStyle=elapsed<4.9?"#d7c7a0":"#f2bd42";ctx.beginPath();ctx.arc(x,y,p.size*(1-q*.35),0,Math.PI*2);ctx.fill()}}ctx.globalAlpha=1;if(elapsed<5.3)raf=requestAnimationFrame(frame);else ctx.clearRect(0,0,w,h)}
+ resize();seed();setTimeout(()=>{cancelAnimationFrame(raf);start=0;raf=requestAnimationFrame(frame)},2750);addEventListener("resize",resize,{passive:true});
 })();
