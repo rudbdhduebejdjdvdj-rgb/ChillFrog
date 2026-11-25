@@ -91,3 +91,15 @@ body{
  background-size:320px 320px,auto,auto,auto;
  background-attachment:fixed;
 }
+
+
+/* BIG, unmistakable peace-sign + stylized-leaf wallpaper */
+body{
+  background-image:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'%3E%3Cg fill='none' stroke='%23f2bd42' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' opacity='.58'%3E%3Ccircle cx='135' cy='135' r='94'/%3E%3Cpath d='M135 41v188M55 91l160 92M215 91L55 183'/%3E%3C/g%3E%3Cg fill='none' stroke='%2378c94b' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' opacity='.52'%3E%3Cpath d='M390 470C315 390 325 305 390 250c65 55 75 140 0 220zM390 470c-68-12-113-52-128-111 65-17 111 24 128 111zM390 470c68-12 113-52 128-111-65-17-111 24-128 111zM390 470v58'/%3E%3Cpath d='M390 250v278' stroke-width='5'/%3E%3C/g%3E%3Cg fill='none' stroke='%23e34b38' stroke-width='8' opacity='.50'%3E%3Ccircle cx='430' cy='105' r='54'/%3E%3Cpath d='M430 51v108M384 78l92 54M476 78l-92 54'/%3E%3C/g%3E%3C/svg%3E"),
+  radial-gradient(ellipse at 75% 18%,#294c2c 0,transparent 36%),
+  radial-gradient(ellipse at 10% 70%,#523322 0,transparent 30%),
+  var(--night);
+  background-size:560px 560px,auto,auto,auto;
+  background-attachment:fixed;
+}
