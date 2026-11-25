@@ -11,35 +11,29 @@
 <body>
 <div class="leaf-intro" id="leaf-intro" aria-label="ChillFrog intro animation" role="presentation">
   <div class="leaf-intro-glow"></div>
+  <canvas class="ash-canvas" id="ash-canvas" aria-hidden="true"></canvas>
   <div class="leaf-stage">
-    <svg class="intro-leaf" viewBox="0 0 360 420" aria-hidden="true">
-      <defs>
-        <linearGradient id="leafFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#174d2b"/><stop offset=".55" stop-color="#78c94b"/><stop offset="1" stop-color="#c1e879"/></linearGradient>
-        <linearGradient id="burnFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff3d16"/><stop offset=".48" stop-color="#ff9d22"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
-      </defs>
-      <g class="cannabis-leaf">
-        <path class="leaf-blade" d="M180 370 C166 316 160 241 164 164 C166 105 174 54 180 18 C188 62 198 112 198 166 C200 244 193 317 180 370Z"/>
-        <path class="leaf-blade" d="M169 285 C137 256 99 218 69 174 C48 143 31 111 20 78 C52 101 83 124 111 151 C145 184 166 220 179 257 C181 269 177 280 169 285Z"/>
-        <path class="leaf-blade" d="M191 285 C223 256 261 218 291 174 C312 143 329 111 340 78 C308 101 277 124 249 151 C215 184 194 220 181 257 C179 269 183 280 191 285Z"/>
-        <path class="leaf-blade" d="M163 326 C128 309 91 284 59 253 C37 231 19 207 7 181 C42 197 76 213 106 233 C137 254 162 279 180 305Z"/>
-        <path class="leaf-blade" d="M197 326 C232 309 269 284 301 253 C323 231 341 207 353 181 C318 197 284 213 254 233 C223 254 198 279 180 305Z"/>
-        <path class="leaf-blade" d="M173 354 C143 344 115 330 88 311 C69 297 51 280 37 261 C70 270 100 281 126 296 C149 309 168 326 180 342Z"/>
-        <path class="leaf-blade" d="M187 354 C217 344 245 330 272 311 C291 297 309 280 323 261 C290 270 260 281 234 296 C211 309 192 326 180 342Z"/>
-      </g>
-      <g class="leaf-veins" fill="none" stroke="#d7f59b" stroke-width="3.5" stroke-linecap="round" opacity=".82">
-        <path d="M180 385 L180 35 M179 270 L35 92 M181 270 L325 92 M180 316 L18 190 M180 316 L342 190 M180 350 L48 270 M180 350 L312 270"/>
-      </g>
-      <g class="leaf-burn" fill="none" stroke="url(#burnFill)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2600" stroke-dashoffset="2600">
-        <path d="M180 370 C166 316 160 241 164 164 C166 105 174 54 180 18 C188 62 198 112 198 166 C200 244 193 317 180 370Z"/>
-        <path d="M169 285 C137 256 99 218 69 174 C48 143 31 111 20 78 C52 101 83 124 111 151 C145 184 166 220 179 257 C181 269 177 280 169 285Z"/>
-        <path d="M191 285 C223 256 261 218 291 174 C312 143 329 111 340 78 C308 101 277 124 249 151 C215 184 194 220 181 257 C179 269 183 280 191 285Z"/>
-        <path d="M163 326 C128 309 91 284 59 253 C37 231 19 207 7 181 C42 197 76 213 106 233 C137 254 162 279 180 305Z"/>
-        <path d="M197 326 C232 309 269 284 301 253 C323 231 341 207 353 181 C318 197 284 213 254 233 C223 254 198 279 180 305Z"/>
-        <path d="M173 354 C143 344 115 330 88 311 C69 297 51 280 37 261 C70 270 100 281 126 296 C149 309 168 326 180 342Z"/>
-        <path d="M187 354 C217 344 245 330 272 311 C291 297 309 280 323 261 C290 270 260 281 234 296 C211 309 192 326 180 342Z"/>
-      </g>
-      <path class="leaf-char" d="M180 370 C166 316 160 241 164 164 C166 105 174 54 180 18 C188 62 198 112 198 166 C200 244 193 317 180 370Z" fill="none" stroke="#20180e" stroke-width="7" stroke-dasharray="1050" stroke-dashoffset="1050" opacity="0"/>
-    </svg>
+    <svg class="intro-leaf" viewBox="0 0 700 760" aria-hidden="true">
+<defs><linearGradient id="leafFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#16451f"/><stop offset=".48" stop-color="#3f8d32"/><stop offset="1" stop-color="#9acb59"/></linearGradient><linearGradient id="burnFill" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff3b12"/><stop offset=".5" stop-color="#ff9e22"/><stop offset="1" stop-color="#fff0a0"/></linearGradient></defs>
+<g class="leaf-blades">
+<path class="leaf-blade" d="M350 680 L337 625 L319 585 L329 558 L300 540 L311 514 L278 492 L294 467 L258 444 L279 420 L244 395 L271 374 L239 348 L273 332 L248 303 L286 294 L267 261 L307 263 L295 224 L333 240 L329 197 L350 222 L370 197 L367 240 L405 224 L393 263 L433 261 L414 294 L452 303 L427 332 L461 348 L429 374 L456 395 L421 420 L442 444 L406 467 L422 492 L389 514 L400 540 L371 558 L381 585 L363 625Z"/>
+<path class="leaf-blade" d="M334 625 L290 581 L253 532 L260 508 L224 500 L231 474 L191 459 L207 435 L166 416 L188 393 L148 371 L177 354 L143 327 L180 318 L157 285 L197 290 L180 254 L220 270 L214 231 L251 254 L256 214 L285 250 L301 292 L319 344 L338 420Z"/>
+<path class="leaf-blade" d="M366 625 L410 581 L447 532 L440 508 L476 500 L469 474 L509 459 L493 435 L534 416 L512 393 L552 371 L523 354 L557 327 L520 318 L543 285 L503 290 L520 254 L480 270 L486 231 L449 254 L444 214 L415 250 L399 292 L381 344 L362 420Z"/>
+<path class="leaf-blade" d="M330 656 L268 636 L214 608 L217 590 L172 582 L184 563 L139 548 L158 530 L112 511 L139 494 L98 469 L133 459 L101 430 L144 432 L126 398 L172 411 L170 374 L213 402 L245 454 L290 526Z"/>
+<path class="leaf-blade" d="M370 656 L432 636 L486 608 L483 590 L528 582 L516 563 L561 548 L542 530 L588 511 L561 494 L602 469 L567 459 L599 430 L556 432 L574 398 L528 411 L530 374 L487 402 L455 454 L410 526Z"/>
+<path class="leaf-blade" d="M343 680 L298 675 L257 659 L265 645 L226 636 L241 622 L206 604 L229 593 L202 573 L233 575 L218 551 L251 564 L274 592 L350 700Z"/>
+<path class="leaf-blade" d="M357 680 L402 675 L443 659 L435 645 L474 636 L459 622 L494 604 L471 593 L498 573 L467 575 L482 551 L449 564 L426 592 L350 700Z"/>
+</g>
+<g class="leaf-veins" fill="none" stroke="#b9dc83" stroke-width="3.5" stroke-linecap="round" opacity=".7"><path d="M350 720 L350 215 M350 678 L181 325 M350 678 L519 325 M350 678 L118 472 M350 678 L582 472 M350 678 L225 606 M350 678 L475 606"/></g>
+<g class="leaf-burn" fill="none" stroke="url(#burnFill)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5600" stroke-dashoffset="5600">
+<path d="M350 680 L337 625 L319 585 L329 558 L300 540 L311 514 L278 492 L294 467 L258 444 L279 420 L244 395 L271 374 L239 348 L273 332 L248 303 L286 294 L267 261 L307 263 L295 224 L333 240 L329 197 L350 222 L370 197 L367 240 L405 224 L393 263 L433 261 L414 294 L452 303 L427 332 L461 348 L429 374 L456 395 L421 420 L442 444 L406 467 L422 492 L389 514 L400 540 L371 558 L381 585 L363 625Z"/>
+<path d="M334 625 L290 581 L253 532 L260 508 L224 500 L231 474 L191 459 L207 435 L166 416 L188 393 L148 371 L177 354 L143 327 L180 318 L157 285 L197 290 L180 254 L220 270 L214 231 L251 254 L256 214 L285 250 L301 292 L319 344 L338 420Z"/>
+<path d="M366 625 L410 581 L447 532 L440 508 L476 500 L469 474 L509 459 L493 435 L534 416 L512 393 L552 371 L523 354 L557 327 L520 318 L543 285 L503 290 L520 254 L480 270 L486 231 L449 254 L444 214 L415 250 L399 292 L381 344 L362 420Z"/>
+<path d="M330 656 L268 636 L214 608 L217 590 L172 582 L184 563 L139 548 L158 530 L112 511 L139 494 L98 469 L133 459 L101 430 L144 432 L126 398 L172 411 L170 374 L213 402 L245 454 L290 526Z"/>
+<path d="M370 656 L432 636 L486 608 L483 590 L528 582 L516 563 L561 548 L542 530 L588 511 L561 494 L602 469 L567 459 L599 430 L556 432 L574 398 L528 411 L530 374 L487 402 L455 454 L410 526Z"/>
+<path d="M343 680 L298 675 L257 659 L265 645 L226 636 L241 622 L206 604 L229 593 L202 573 L233 575 L218 551 L251 564 L274 592 L350 700Z"/>
+<path d="M357 680 L402 675 L443 659 L435 645 L474 636 L459 622 L494 604 L471 593 L498 573 L467 575 L482 551 L449 564 L426 592 L350 700Z"/>
+</g></svg>
     <div class="intro-flames"><i></i><i></i><i></i><i></i><i></i></div>
   </div>
   <div class="intro-wordmark">CHILL<span>FROG</span></div>
