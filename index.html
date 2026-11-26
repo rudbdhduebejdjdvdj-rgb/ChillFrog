@@ -87,16 +87,32 @@
 <section class="community-hub" id="community-hub">
 <div class="hub-inner">
 <div class="eyebrow">07 / THE SWAMP HQ</div>
-<div class="hub-heading"><div><h2>ONE SWAMP.<br><span>ONE COMMUNITY.</span></h2><p>A home for memes, ideas, missions, polls and community-made creations.</p></div><div class="hub-status" id="community-status"><i></i><span>COMMUNITY SERVICES SETUP</span></div></div>
+<div class="hub-heading"><div><h2>ONE SWAMP.<br><span>ONE COMMUNITY.</span></h2><p>Memes, ideas, missions, polls and community-made creations — in one place.</p></div><div class="hub-status" id="community-status"><i></i><span>CONNECTING COMMUNITY</span></div></div>
+<div class="community-access">
+<form id="community-profile-form" class="hub-card profile-card">
+<div class="hub-card-head"><div><small>YOUR SWAMP ID</small><h3>JOIN AS A GUEST</h3></div><span>🐸</span></div>
+<label for="community-handle">PUBLIC NICKNAME</label><input id="community-handle" name="handle" maxlength="18" minlength="3" pattern="[A-Za-z0-9_]{3,18}" placeholder="FroggyFan_01" autocomplete="off" required>
+<button class="btn btn-lime" type="submit">JOIN THE COMMUNITY</button><p id="community-auth-status" class="hub-description">No email or real name required. Choose a nickname; do not use personal information.</p>
+</form>
+<form id="community-post-form" class="hub-card post-card">
+<div class="hub-card-head"><div><small>SHARE WITH THE SWAMP</small><h3>POST AN IDEA</h3></div><span>💡</span></div>
+<label for="community-post-kind">POST TYPE</label><select id="community-post-kind"><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
+<label for="community-post-title">TITLE</label><input id="community-post-title" maxlength="80" placeholder="A new idea for ChillFrog" required>
+<label for="community-post-body">DESCRIPTION</label><textarea id="community-post-body" maxlength="600" rows="3" placeholder="Tell the community about it…" required></textarea>
+<label for="community-post-image">IMAGE (OPTIONAL)</label><input id="community-post-image" type="file" accept="image/png,image/jpeg,image/webp">
+<button class="btn btn-lime" type="submit">SEND FOR REVIEW ↗</button><p id="community-post-status" class="hub-description">Posts are checked by moderators before appearing publicly.</p>
+</form>
+</div>
 <div class="hub-grid">
-<article class="hub-card hub-leaderboard"><div class="hub-card-head"><div><small>COMMUNITY RANKING</small><h3>THE SWAMP TOP 5</h3></div><span>🏆</span></div><div id="community-leaderboard" class="leaderboard-list"><div class="hub-empty">Community scores will appear here when the secure community database is connected.</div></div><small class="hub-footnote">Points come from approved community contributions — never from token purchases.</small></article>
-<article class="hub-card hub-activity"><div class="hub-card-head"><div><small>WHAT'S HAPPENING</small><h3>SWAMP ACTIVITY</h3></div><span>📡</span></div><div class="activity-row"><b>🎨</b><div><strong>Meme of the week</strong><p>Community-created memes and friendly voting.</p></div><span class="activity-tag">PLANNED</span></div><div class="activity-row"><b>💡</b><div><strong>Idea board</strong><p>Suggest features and vote on proposals.</p></div><span class="activity-tag">PLANNED</span></div><div class="activity-row"><b>🎙️</b><div><strong>AMAs & events</strong><p>See upcoming sessions and recaps.</p></div><span class="activity-tag">PLANNED</span></div><div class="activity-row"><b>🎯</b><div><strong>Froggy missions</strong><p>Creative weekly challenges for everyone.</p></div><span class="activity-tag">PLANNED</span></div></article>
+<article class="hub-card hub-leaderboard"><div class="hub-card-head"><div><small>COMMUNITY RANKING</small><h3>THE SWAMP TOP 5</h3></div><span>🏆</span></div><div id="community-leaderboard" class="leaderboard-list"><div class="hub-empty">Connect to load the community leaderboard.</div></div><small class="hub-footnote">Points come from approved posts and missions — never from token purchases.</small></article>
+<article class="hub-card hub-activity"><div class="hub-card-head"><div><small>COMMUNITY CALENDAR</small><h3>EVENTS & AMAS</h3></div><span>📡</span></div><div id="community-events" class="hub-empty">Official community events will appear here.</div><div class="hub-card-head hub-subhead"><div><small>HAVE YOUR SAY</small><h3>OPEN POLLS</h3></div><span>🗳️</span></div><div id="community-polls" class="hub-empty">No live polls loaded.</div></article>
 </div>
 <div class="hub-bottom-grid">
-<article class="hub-card"><div class="hub-card-head"><div><small>COMMUNITY IDEAS</small><h3>THE IDEA POND</h3></div><span>💡</span></div><p class="hub-description">Pitch an idea for ChillFrog. Approved suggestions will appear here for community voting.</p><div class="hub-empty" id="idea-board-state">The idea board will go live with community accounts and moderation.</div></article>
-<article class="hub-card"><div class="hub-card-head"><div><small>EVENTS & AMAS</small><h3>THE SWAMP CALENDAR</h3></div><span>📅</span></div><p class="hub-description">Community calls, creative contests, AMAs and project updates in one place.</p><div class="hub-empty" id="event-board-state">No events published yet. Official dates will be posted here.</div></article>
+<article class="hub-card"><div class="hub-card-head"><div><small>WEEKLY CHALLENGES</small><h3>FROGGY MISSIONS</h3></div><span>🎯</span></div><div id="community-missions" class="hub-empty">Community challenges will appear here.</div></article>
+<article class="hub-card"><div class="hub-card-head"><div><small>COMMUNITY FEED</small><h3>FRESH FROM THE SWAMP</h3></div><span>🌱</span></div><div id="community-feed" class="community-feed"><div class="hub-empty">Approved memes and ideas will appear here.</div></div></article>
 </div>
-<p class="hub-safety">Be kind. Never post private information, seed phrases, wallet recovery words or personal contact details. Community posts will require moderation before publication.</p>
+<div id="community-moderation" class="hub-card moderation-panel" hidden><div class="hub-card-head"><div><small>STAFF ONLY</small><h3>MODERATION QUEUE</h3></div><span>🛡️</span></div><div id="community-pending"></div></div>
+<p class="hub-safety">Be kind. Never post private information, seed phrases, recovery words or contact details. Posts are moderated before publication.</p>
 </div></section>
 <section class="meme-lab" id="meme-lab">
 <div class="meme-inner"><div class="eyebrow">08 / CREATE SOMETHING</div><div class="meme-heading"><div><h2>FROGGY <span>MEME LAB.</span></h2><p>Make a meme, download it and share it with the swamp.</p></div><span class="meme-badge">FREE CREATOR</span></div>
@@ -105,7 +121,7 @@
 <label for="meme-top">TOP TEXT</label><input id="meme-top" maxlength="70" value="WHEN THE VIBE IS RIGHT">
 <label for="meme-bottom">BOTTOM TEXT</label><input id="meme-bottom" maxlength="70" value="JUST CHILL, FROGGY">
 <label for="meme-image">ADD YOUR IMAGE (OPTIONAL)</label><input id="meme-image" type="file" accept="image/png,image/jpeg,image/webp">
-<div class="meme-actions"><button id="meme-generate" class="btn btn-lime" type="button">UPDATE PREVIEW</button><button id="meme-download" class="btn btn-dark" type="button">DOWNLOAD PNG ↓</button></div><small class="meme-local-note">Your image stays in your browser. Nothing is uploaded.</small></div>
+<div class="meme-actions"><button id="meme-generate" class="btn btn-lime" type="button">UPDATE PREVIEW</button><button id="meme-download" class="btn btn-dark" type="button">DOWNLOAD PNG ↓</button><button id="meme-submit" class="btn btn-social" type="button">SEND TO COMMUNITY ↗</button></div><small class="meme-local-note">Your image stays in your browser. Nothing is uploaded.</small></div>
 <div class="meme-preview-wrap"><canvas id="meme-canvas" width="1080" height="1080" aria-label="Meme preview"></canvas></div></div>
 </div></section>
 <section class="buyers-strip" aria-label="Top CFROG buyers">
@@ -120,4 +136,6 @@
 <script src="https://plugin.jup.ag/plugin-v1.js"></script>
 <script src="market.js" defer></script>
 <script src="meme.js" defer></script>
+<script src="community-config.js" defer></script>
+<script type="module" src="community.js"></script>
 <script src="script.js"></script></body></html>
