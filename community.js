@@ -90,6 +90,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   }
   async function sendLoginLink(email) {
     const cleanEmail = email.trim().toLowerCase();
+    if (!captchaToken) throw new Error("Complete the anti-bot check first.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) throw new Error("Enter a valid email address.");
     const { data: current } = await db.auth.getSession();
     if (current.session?.user?.is_anonymous) await db.auth.signOut();
