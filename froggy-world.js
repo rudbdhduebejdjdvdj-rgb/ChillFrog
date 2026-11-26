@@ -1,7 +1,7 @@
 (function(){
  const $=id=>document.getElementById(id);
  const storeKey="chillfrog-world-progress-v1";
- const defaults={best:0,streak:0,lastDay:"",badges:[]};
+ const defaults={best:0,streak:0,lastDay:"",badges:[],cards:["chill"]};
  let state={...defaults};
  try{state={...defaults,...JSON.parse(localStorage.getItem(storeKey)||"{}")}}catch{}
  const save=()=>{try{localStorage.setItem(storeKey,JSON.stringify(state))}catch{}};
@@ -10,6 +10,7 @@
   $("fw-best").textContent=state.best||0;
   $("fw-streak").textContent=(state.streak||0)+" 🔥";
   $("fw-badges").textContent=state.badges.length+"/4";
+  document.querySelectorAll("[data-card]").forEach(card=>card.classList.toggle("is-unlocked",(state.cards||["chill"]).includes(card.dataset.card)));
   document.querySelectorAll("[data-badge]").forEach(card=>{
    const unlocked=state.badges.includes(card.dataset.badge);
    card.classList.toggle("is-unlocked",unlocked);
@@ -18,7 +19,10 @@
  }
  function unlock(id){
   if(!badgeIds.includes(id)||state.badges.includes(id))return;
-  state.badges.push(id);save();renderProgress();
+  state.badges.push(id);
+  const cardMap={first:"chill",ten:"sunset",twentyfive:"neon",secret:"guardian"};
+  state.cards=Array.from(new Set([...(state.cards||["chill"]),cardMap[id]]));
+  save();renderProgress();
   const names={first:"FIRST HOP",ten:"10 HOPS",twentyfive:"25 HOPS",secret:"SECRET VIBE"};
   $("fw-game-message").textContent="Badge unlocked: "+names[id]+" 🐸";
  }
