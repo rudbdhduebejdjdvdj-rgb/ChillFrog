@@ -6,7 +6,7 @@ Lightweight static community site hosted on GitHub Pages.
 - Compact CFROG live market card via Jupiter Tokens API v2 (60-second refresh).
 - Jupiter swap widget with the official CFROG mint.
 - Local meme generator with PNG export; uploaded source images remain in the browser.
-- Supabase community: guest profiles, moderated posts, likes, reports, polls, events, missions and contributor leaderboard.
+- Supabase community: private email magic-link sign-in, automatically generated public IDs, moderated posts, likes, reports, polls, events, missions and contributor leaderboard.
 - Separate on-chain buyer leaderboard; requires a trusted indexer before it can show verified buys.
 
 ## Hosting
@@ -22,7 +22,7 @@ Applied database migrations:
 
 ### Required launch configuration
 1. Email passwordless sign-in is used. Confirm the Email provider is enabled in Supabase Authentication → Sign In / Providers, turn on email confirmations, and add `https://rudbdhduebejdjdvdj-rgb.github.io/ChillFrog/` to the Auth URL Configuration redirect allow list. The frontend sends a one-time magic link; email addresses remain private and public profiles use an automatically generated Froggy ID.
-2. Configure CAPTCHA / abuse protection before opening public posting.
+2. Configure CAPTCHA / abuse protection and a custom SMTP sender before public launch. Supabase's default email sender is intended for low-volume testing, not dependable production delivery.
 3. Add the owner's auth user ID to `public.community_moderators` from the Supabase SQL editor. Moderators can approve/reject posts and manage events, polls and missions.
 4. Configure a trusted Solana transaction indexer and a server-side API secret before populating `public.token_buyer_leaderboard`. Do not calculate buyer rankings from holder counts or user-submitted claims.
 5. Add real moderation rules and an abuse-report response process before public launch.
