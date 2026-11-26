@@ -25,4 +25,4 @@ jobs:
           test -s create.html
           grep -q 'emailAuthReady: false' community-config.js
           grep -q 'turnstileSiteKey' community-config.js
-          grep -q 'status = "pending"' supabase/migrations/20261126000100_chillfrog_community.sql
+          grep -q "status text not null default 'pending'" supabase/migrations/20261126000100_chillfrog_community.sql
