@@ -341,3 +341,8 @@ html.ash-building .ash-section-active{opacity:1!important;filter:none!important;
 .buyer-chip b{font:800 12px Syne;color:#f2bd42}.buyer-chip span{font:700 9px monospace;color:#fff4d7}.buyer-chip strong{font:700 9px Syne;color:#d7ff45}
 .buyer-chip button{border:0;background:none;color:#aebd9d;font-size:7px;cursor:pointer}
 @media(max-width:760px){.buyer-leaderboard{order:3;flex-basis:100%;flex-wrap:wrap}.buyers-inner>a{margin-left:auto}}
+
+/* Cinematic leaf intro temporarily disabled: show the site immediately. */
+.leaf-intro,.ash-canvas{display:none!important}
+html.ash-loading,html.ash-loading body{overflow:auto!important}
+html.ash-loading header,html.ash-loading main,html.ash-loading footer{visibility:visible!important;opacity:1!important;filter:none!important}
