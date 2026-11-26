@@ -12,14 +12,14 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     setStatus("SUPABASE PROJECT NOT CONNECTED");
     setMessage(authStatus, "Community accounts are waiting for the dedicated ChillFrog Supabase project.");
     setMessage(postStatus, "Posting, voting and the leaderboard activate after the secure database is connected.");
-    $("community-handle") && ($("community-handle").disabled = true);
+    
     $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = true);
     $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach(n => n.disabled = true);
     $("meme-submit") && ($("meme-submit").disabled = true);
     return;
   }
 
-  $("community-handle") && ($("community-handle").disabled = false);
+  
   $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = false);
   const db = createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
@@ -173,7 +173,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   setStatus("READY · JOIN TO PARTICIPATE");
   db.auth.onAuthStateChange((_event,session)=>{
     user=session?.user||null;
-    if (user && !user.is_anonymous) ensureProfile(user).catch(error=>setMessage(authStatus,error.message,true));
+    if (user && !user.is_anonymous) window.setTimeout(()=>ensureProfile(user).catch(error=>setMessage(authStatus,error.message,true)),0);
     else if (!user) { profile=null; $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n)=>n.disabled=true); $("meme-submit") && ($("meme-submit").disabled=true); }
   });
   db.auth.getSession().then(({data,error})=>{if(error)throw error;if(data.session?.user&&!data.session.user.is_anonymous)ensureProfile(data.session.user)}).catch(error=>setMessage(authStatus,error.message,true));
