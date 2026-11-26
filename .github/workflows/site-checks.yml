@@ -18,6 +18,7 @@ jobs:
           node --check meme.js
           node --check script.js
           node --check froggy-world.js
+          node --check i18n.js
           node --input-type=module --check < community.js
       - name: Check required launch pages and safety gates
         run: |
@@ -26,6 +27,14 @@ jobs:
           test -s create.html
           test -s froggy-world.html
           test -s froggy-world.css
+          test -s i18n.js
+          grep -q 'i18n.js' index.html
+          grep -q 'i18n.js' the-swamp.html
+          grep -q 'i18n.js' create.html
+          grep -q 'i18n.js' tienda.html
+          grep -q 'i18n.js' team.html
+          grep -q 'i18n.js' hq.html
+          grep -q 'i18n.js' froggy-world.html
           grep -q 'emailAuthReady: false' community-config.js
           grep -q 'turnstileSiteKey' community-config.js
           grep -q "status text not null default 'pending'" supabase/migrations/20261126000100_chillfrog_community.sql
