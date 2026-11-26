@@ -21,6 +21,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
   
   $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = false);
+  $("community-email") && ($("community-email").disabled = false);
   const db = createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
@@ -63,7 +64,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   }
   async function sendLoginLink(email) {
     const cleanEmail = email.trim().toLowerCase();
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(cleanEmail)) throw new Error("Enter a valid email address.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) throw new Error("Enter a valid email address.");
     const { data: current } = await db.auth.getSession();
     if (current.session?.user?.is_anonymous) await db.auth.signOut();
     const { error } = await db.auth.signInWithOtp({
@@ -143,7 +144,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   }
   async function loadPolls() {
     const box=$("community-polls");if(!box)return;
-    const {data,error}=await db.from("community_polls").select("id,title,description,ends_at,community_poll_options(id,label),community_poll_votes(count)").eq("status","open").gt("ends_at",new Date().toISOString()).order("ends_at").limit(4);
+    const {data,error}=await db.from("community_polls").select("id,title,description,ends_at,community_poll_options(id,label)").eq("status","open").gt("ends_at",new Date().toISOString()).order("ends_at").limit(4);
     box.replaceChildren();
     if(error||!data?.length){box.append(el("div","hub-empty","No open polls right now."));return}
     data.forEach(poll=>{const card=el("div","poll-card");card.append(el("strong","",poll.title),el("p","",poll.description||"Vote and help shape the project."));const options=el("div","poll-options");(poll.community_poll_options||[]).forEach(option=>{const b=el("button","poll-option",option.label+"  →");b.type="button";b.addEventListener("click",async()=>{if(!user){setMessage(authStatus,"Join the community to vote.");return}b.disabled=true;const {error}=await db.from("community_poll_votes").insert({poll_id:poll.id,option_id:option.id,user_id:user.id});setMessage(postStatus,error?(error.code==="23505"?"You have already voted in this poll.":error.message):"Your vote has been recorded.",!!error)});options.append(b)});card.append(options);box.append(card)});
