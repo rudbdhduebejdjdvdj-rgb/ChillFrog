@@ -248,3 +248,36 @@ for update to authenticated
 using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
 with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
 grant update on public.community_mission_completions to authenticated;
+
+create policy "Moderators can review mission submissions" on public.community_mission_completions
+for select to authenticated using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+
+create policy "Moderators can read pending community media" on storage.objects
+for select to authenticated using (
+  bucket_id='community-media' and exists (
+    select 1 from public.community_posts p
+    where p.image_path=name and p.status='pending'
+      and exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid()))
+  )
+);
+
+create or replace function public.enforce_community_post_rate_limit()
+returns trigger
+language plpgsql
+as $$
+declare recent_posts integer;
+begin
+  select count(*) into recent_posts
+  from public.community_posts
+  where author_id = new.author_id
+    and created_at > now() - interval '1 hour';
+  if recent_posts >= 5 then
+    raise exception 'Community posting limit reached. Try again later.';
+  end if;
+  return new;
+end;
+$$;
+
+create trigger community_posts_rate_limit
+before insert on public.community_posts
+for each row execute function public.enforce_community_post_rate_limit();
