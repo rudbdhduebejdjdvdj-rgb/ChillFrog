@@ -298,3 +298,39 @@ html.ash-building .ash-section-active{opacity:1!important;filter:none!important;
 .meme-preview-wrap{padding:12px;border:1px solid #ffffff24;border-radius:15px;background:#100a1e}
 #meme-canvas{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:8px;background:#1a2c1b}
 @media(max-width:760px){.hub-heading,.meme-heading{align-items:flex-start;flex-direction:column}.hub-grid,.hub-bottom-grid,.meme-workspace{grid-template-columns:1fr}.community-hub,.meme-lab{padding:72px 18px}.hub-heading h2,.meme-heading h2{font-size:clamp(38px,10vw,55px);letter-spacing:-2px}.hub-status{white-space:normal}}
+
+/* Community accounts, submissions, feed, polls and moderation */
+.community-access{display:grid;grid-template-columns:.82fr 1.18fr;gap:15px;margin-bottom:15px}
+.profile-card,.post-card{display:flex;flex-direction:column;align-items:stretch;gap:9px}
+.community-hub label{margin-top:5px;color:#f2bd42;font-size:8px;font-weight:800;letter-spacing:1.2px}
+.community-hub input,.community-hub select,.community-hub textarea{width:100%;padding:12px;border:1px solid #ffffff2a;border-radius:8px;background:#100b1d;color:#fff9e9;font:inherit;font-size:11px;resize:vertical}
+.community-hub input[type=file]{font-size:9px}
+.community-hub button{border:0;cursor:pointer;align-self:flex-start;margin-top:6px}
+.community-hub button:disabled{opacity:.45;cursor:not-allowed}
+.hub-description{min-height:0}
+.hub-subhead{margin-top:24px;padding-top:16px;border-top:1px solid #ffffff1c}
+.leaderboard-row{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:12px 2px;border-bottom:1px solid #ffffff15}
+.leaderboard-row .rank{font:800 17px Syne;color:#f2bd42}
+.leaderboard-row strong{font-size:11px}.leaderboard-row small{display:block;margin-top:3px;color:#aebd9d;font-size:8px}
+.leaderboard-row b{font:800 12px Syne;color:#d7ff45}
+.community-feed{display:grid;gap:10px}
+.community-post{padding:14px;border:1px solid #ffffff18;border-radius:10px;background:#07180f}
+.community-post-head{display:flex;justify-content:space-between;gap:10px;color:#f2bd42;font-size:8px;letter-spacing:.6px}
+.community-post h4{font:800 15px Syne;margin:10px 0 6px;color:#fff9e9}
+.community-post p{font-size:10px;line-height:1.7;color:#c9d3c1;white-space:pre-wrap;overflow-wrap:anywhere}
+.community-post img{display:block;width:100%;max-height:300px;object-fit:contain;border-radius:8px;margin-top:10px;background:#050c07}
+.community-post-actions{display:flex;gap:8px;align-items:center;margin-top:10px}
+.community-post-actions button,.poll-option,.mission-action,.report-post{padding:8px 10px;border:1px solid #ffffff2a;border-radius:7px;background:#ffffff0a;color:#fff9e9;font-size:9px;font-weight:800;cursor:pointer}
+.community-post-actions button:hover,.poll-option:hover,.mission-action:hover{border-color:#d7ff45}
+.event-item,.mission-item{padding:12px 0;border-bottom:1px solid #ffffff16}
+.event-item strong,.mission-item strong{font-size:11px}.event-item p,.mission-item p{margin:5px 0;color:#b9c9b1;font-size:9px;line-height:1.6}
+.event-item small,.mission-item small{color:#f2bd42;font-size:8px}
+.poll-card{padding:12px 0;border-bottom:1px solid #ffffff16}.poll-card strong{font-size:11px}.poll-card p{font-size:9px;color:#b9c9b1;line-height:1.5}
+.poll-options{display:grid;gap:6px;margin-top:9px}.poll-option{display:flex;justify-content:space-between;text-align:left}
+.poll-option span{color:#d7ff45}
+.moderation-panel{margin-top:16px;border-color:#f2bd4270}
+.moderation-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff17}
+.moderation-item p{font-size:10px;color:#c9b9dd;line-height:1.5}
+.moderation-actions{display:flex;gap:6px;flex-shrink:0}.moderation-actions button{padding:8px 10px;border:1px solid #ffffff2c;border-radius:6px;background:#ffffff10;color:white;font-size:8px;cursor:pointer}
+.moderation-actions .approve{background:#d7ff45;color:#172a18;border:0}
+@media(max-width:760px){.community-access{grid-template-columns:1fr}.moderation-item{align-items:flex-start;flex-direction:column}.hub-card{padding:17px}}
