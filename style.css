@@ -248,3 +248,53 @@ html.ash-building .ash-section-active{opacity:1!important;filter:none!important;
 @keyframes leafIgnite{0%{stroke-dashoffset:5600;opacity:0}10%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
 @keyframes leafChar{0%,10%{stroke-dashoffset:5600;opacity:0}100%{stroke-dashoffset:0;opacity:.98}}
 @media(prefers-reduced-motion:reduce){html.ash-loading{overflow:auto}html.ash-loading header,html.ash-loading main,html.ash-loading footer,html.ash-loading .disclaimer{opacity:1!important}.ash-copy-hidden{opacity:1!important;visibility:visible!important}.ash-canvas{display:none}}
+
+/* Compact live market dashboard */
+.live-market{padding:13px;margin:16px 0 7px;border-color:#78c94b65;background:linear-gradient(145deg,#203e27,#102219)}
+.live-market .stats-heading{padding-bottom:10px;font-size:9px}
+.market-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#78c94b;box-shadow:0 0 8px #78c94b;margin-right:5px}
+.market-price-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0 12px}
+.market-price-row small,.market-metrics small{display:block;font-size:8px;letter-spacing:1px;color:#b8c9ad}
+.market-price-row b{display:block;margin:5px 0;font:800 clamp(23px,4vw,30px) Syne,sans-serif;color:#fff4d7}
+.market-change{font-size:9px;color:#a9c39d}.market-change.positive{color:#8be28a}.market-change.negative{color:#ff9b9b}
+.market-mini-swap{padding:9px 12px;border-radius:7px;background:#d7ff45;color:#172a18;text-decoration:none;font-size:9px;font-weight:900}
+.market-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.market-metrics>div{padding:9px;border-radius:8px;background:#07180f;border:1px solid #ffffff12;min-width:0}
+.market-metrics b{display:block;margin-top:5px;font:700 13px Syne,sans-serif;color:#f5f5e9;overflow-wrap:anywhere}
+.live-market .stats-disclaimer{font-size:8px;padding-top:9px}
+/* Community hub */
+.community-hub{padding:95px 24px;background:radial-gradient(ellipse at 12% 0%,#6e2bb955,transparent 42%),linear-gradient(145deg,#140d25,#0d1c13 70%);border-top:1px solid #ffffff16}
+.hub-inner,.meme-inner{max-width:1120px;margin:auto}
+.hub-heading,.meme-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:16px 0 34px}
+.hub-heading h2,.meme-heading h2{font:800 clamp(38px,5.4vw,64px)/.98 Syne,sans-serif;letter-spacing:-3px;margin:10px 0}
+.hub-heading h2 span,.meme-heading h2 span{color:#d7ff45}
+.hub-heading p,.meme-heading p{max-width:520px;color:#c9b9dd;font-size:13px;line-height:1.8}
+.hub-status{display:flex;align-items:center;gap:9px;padding:10px 13px;border:1px solid #f2bd4250;border-radius:99px;color:#f2bd42;font-size:8px;font-weight:800;letter-spacing:1px;white-space:nowrap}
+.hub-status i{width:7px;height:7px;border-radius:50%;background:#f2bd42}
+.hub-grid,.hub-bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
+.hub-card{padding:22px;border:1px solid #ffffff1e;border-radius:16px;background:linear-gradient(145deg,#ffffff0d,#ffffff04);min-width:0}
+.hub-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.hub-card-head small{color:#f2bd42;font-size:8px;letter-spacing:1.5px;font-weight:800}
+.hub-card-head h3{font:800 20px Syne,sans-serif;margin:7px 0 0;color:#fff9e9}
+.hub-card-head>span{font-size:27px}
+.hub-empty{padding:16px;border:1px dashed #ffffff2c;border-radius:10px;color:#b9b0c6;font-size:11px;line-height:1.7}
+.hub-footnote,.hub-safety{display:block;margin-top:14px;color:#9f9aaa;font-size:9px;line-height:1.7}
+.activity-row{display:flex;align-items:center;gap:11px;padding:12px 0;border-top:1px solid #ffffff14}
+.activity-row>b{font-size:19px}.activity-row>div{flex:1;min-width:0}.activity-row strong{font-size:11px}.activity-row p{margin:4px 0 0;color:#b9b0c6;font-size:9px;line-height:1.5}
+.activity-tag{font-size:7px;color:#d7ff45;letter-spacing:1px;font-weight:800}
+.hub-description{color:#c9b9dd;font-size:11px;line-height:1.7;min-height:42px}
+.hub-safety{text-align:center;margin:22px auto 0;max-width:760px}
+/* Meme generator */
+.meme-lab{padding:95px 24px;background:linear-gradient(145deg,#1a1030,#251047);border-top:1px solid #ff65c833}
+.meme-badge{padding:10px 13px;border:1px solid #d7ff4570;border-radius:99px;color:#d7ff45;font-size:8px;font-weight:900;letter-spacing:1px;white-space:nowrap}
+.meme-workspace{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);gap:22px;align-items:start}
+.meme-controls{display:flex;flex-direction:column;gap:9px;padding:21px;border:1px solid #ffffff24;border-radius:15px;background:#ffffff08}
+.meme-controls label{margin-top:7px;color:#d7ff45;font-size:8px;font-weight:800;letter-spacing:1.2px}
+.meme-controls input,.meme-controls select{width:100%;padding:12px;border:1px solid #ffffff2a;border-radius:8px;background:#110b20;color:#fff9e9;font:inherit;font-size:11px}
+.meme-controls input[type=file]{font-size:9px}
+.meme-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.meme-actions .btn{border:0;cursor:pointer;font:800 9px "Space Grotesk",sans-serif}
+.meme-local-note{color:#a99ab9;font-size:8px;line-height:1.6}
+.meme-preview-wrap{padding:12px;border:1px solid #ffffff24;border-radius:15px;background:#100a1e}
+#meme-canvas{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:8px;background:#1a2c1b}
+@media(max-width:760px){.hub-heading,.meme-heading{align-items:flex-start;flex-direction:column}.hub-grid,.hub-bottom-grid,.meme-workspace{grid-template-columns:1fr}.community-hub,.meme-lab{padding:72px 18px}.hub-heading h2,.meme-heading h2{font-size:clamp(38px,10vw,55px);letter-spacing:-2px}.hub-status{white-space:normal}}
