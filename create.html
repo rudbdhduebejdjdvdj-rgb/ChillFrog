@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17351f">
+<meta name="description" content="ChillFrog community — good vibes, open minds and big dreams.">
+<title>Create Something — ChillFrog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body><div class="grain"></div><header class="header"><a class="logo" href="index.html"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="index.html#historia">Our story</a><a href="index.html#token">The token</a><a href="index.html#comprar">Swap CFROG</a><a href="index.html#roadmap">Roadmap</a><a href="index.html#faq">FAQ</a><a href="the-swamp.html">The Swamp</a><a href="create.html">Create Something</a><a href="tienda.html">Tienda</a><a class="nav-cta" href="the-swamp.html">Join the swamp ↗</a></nav></header><main id="inicio">
+<section class="meme-lab" id="meme-lab">
+<div class="meme-inner"><div class="eyebrow">THE CHILLFROG CREATIVE STUDIO</div>
+<div class="meme-heading"><div><h2>CREATE <span>SOMETHING.</span></h2><p>Make a meme, download it and share it with the swamp.</p></div><span class="meme-badge">FREE CREATOR</span></div>
+<div class="hub-card profile-card" id="community-hub" style="max-width:520px;margin:0 auto 32px">
+<div class="hub-card-head"><div><small>SHARE YOUR CREATION</small><h3>MEMBER ACCESS</h3></div><span>🐸</span></div>
+<form id="community-profile-form">
+<label for="community-email">EMAIL ADDRESS</label><input id="community-email" name="email" type="email" maxlength="254" placeholder="you@example.com" autocomplete="email" inputmode="email" required>
+<button class="btn btn-lime" type="submit">SEND SIGN-IN LINK</button>
+<p id="community-auth-status" class="hub-description">Sign in by email to submit memes. Your email stays private.</p>
+</form><div class="hub-status" id="community-status"><i></i><span>CONNECTING COMMUNITY</span></div><p id="community-post-status" class="hub-description"></p>
+</div>
+<div class="meme-workspace"><div class="meme-controls">
+<label for="meme-template">TEMPLATE</label><select id="meme-template"><option value="classic">Classic ChillFrog</option><option value="neon">Neon swamp</option><option value="sunset">Psychedelic sunset</option></select>
+<label for="meme-top">TOP TEXT</label><input id="meme-top" maxlength="70" value="WHEN THE VIBE IS RIGHT">
+<label for="meme-bottom">BOTTOM TEXT</label><input id="meme-bottom" maxlength="70" value="JUST CHILL, FROGGY">
+<label for="meme-image">ADD YOUR IMAGE (OPTIONAL)</label><input id="meme-image" type="file" accept="image/png,image/jpeg,image/webp">
+<div class="meme-actions"><button id="meme-generate" class="btn btn-lime" type="button">UPDATE PREVIEW</button><button id="meme-download" class="btn btn-dark" type="button">DOWNLOAD PNG ↓</button><button id="meme-submit" class="btn btn-social" type="button" disabled>SEND TO COMMUNITY ↗</button></div><small class="meme-local-note">Your image stays in your browser. Nothing is uploaded.</small></div>
+<div class="meme-preview-wrap"><canvas id="meme-canvas" width="1080" height="1080" aria-label="Meme preview"></canvas></div></div>
+
+</div></section>
+</main><footer><a class="logo" href="#inicio">🐸 CHILL<span>FROG</span></a><p>Two creators. One unique vibe.</p><div class="footer-social"><a href="https://x.com/ChillFrogCoinsl" target="_blank" rel="noopener noreferrer">X</a><a href="https://t.me/+lzFqH1yYBng5ZDA0" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://www.tiktok.com/@morta6767" target="_blank" rel="noopener noreferrer">TikTok</a></div><small>© <span id="year"></span> ChillFrog</small></footer><div class="disclaimer">ChillFrog is a community project. Nothing on this website is an investment offer or financial advice. Crypto assets are high-risk. CFROG is live on pump.fun. Always verify the official mint address before trading.</div><script src="meme.js" defer></script>
+<script src="community-config.js" defer></script>
+<script type="module" src="community.js"></script>
+<script src="script.js"></script></body></html>
