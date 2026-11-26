@@ -225,7 +225,8 @@ body{
 /* Ash typography: particles draw the actual page copy from top to bottom */
 html.ash-loading{overflow:hidden;scroll-behavior:auto}
 html.ash-loading header,html.ash-loading main,html.ash-loading footer,html.ash-loading .disclaimer{opacity:0!important;filter:none!important}
-html.ash-building header,html.ash-building main,html.ash-building footer,html.ash-building .disclaimer{opacity:1;filter:none}
+html.ash-building header,html.ash-building main>section,html.ash-building main>.buyers-strip,html.ash-building footer,html.ash-building .disclaimer{opacity:0;filter:none}
+html.ash-building .ash-section-active{opacity:1!important;filter:none!important;transition:opacity .3s ease}
 .ash-section-active{opacity:1!important;filter:none!important}
 .ash-copy-hidden{opacity:0!important;visibility:hidden!important}
 .ash-copy-visible{visibility:visible!important;opacity:1!important;animation:ashInkIn .48s ease-out both}
