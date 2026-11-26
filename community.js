@@ -73,7 +73,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
       if (lookupError) throw lookupError;
       if (existing) profile = existing;
       else {
-        const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,8);
+        const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,12);
         const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle").single();
         if (error) throw error;
         profile = data;
