@@ -28,6 +28,7 @@ jobs:
           test -s froggy-world.html
           test -s froggy-world.css
           test -s i18n.js
+          test -s supabase/migrations/20261126000300_community_display_names.sql
           grep -q 'i18n.js' index.html
           grep -q 'i18n.js' the-swamp.html
           grep -q 'i18n.js' create.html
@@ -37,4 +38,5 @@ jobs:
           grep -q 'i18n.js' froggy-world.html
           grep -q 'emailAuthReady: false' community-config.js
           grep -q 'turnstileSiteKey' community-config.js
+          grep -q 'display_name' supabase/migrations/20261126000300_community_display_names.sql
           grep -q "status text not null default 'pending'" supabase/migrations/20261126000100_chillfrog_community.sql
