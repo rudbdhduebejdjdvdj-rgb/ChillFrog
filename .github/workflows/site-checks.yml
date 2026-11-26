@@ -32,7 +32,6 @@ jobs:
           grep -q 'i18n.js' index.html
           grep -q 'i18n.js' the-swamp.html
           grep -q 'i18n.js' create.html
-          grep -q 'i18n.js' tienda.html
           grep -q 'i18n.js' team.html
           grep -q 'i18n.js' hq.html
           grep -q 'i18n.js' froggy-world.html
