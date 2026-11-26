@@ -16,13 +16,13 @@ jobs:
         run: |
           node --check market.js
           node --check meme.js
-          node --check script.js
+          node --check script.js\n          node --check froggy-world.js
           node --input-type=module --check < community.js
       - name: Check required launch pages and safety gates
         run: |
           test -s index.html
           test -s the-swamp.html
-          test -s create.html
+          test -s create.html\n          test -s froggy-world.html\n          test -s froggy-world.css
           grep -q 'emailAuthReady: false' community-config.js
           grep -q 'turnstileSiteKey' community-config.js
           grep -q "status text not null default 'pending'" supabase/migrations/20261126000100_chillfrog_community.sql
