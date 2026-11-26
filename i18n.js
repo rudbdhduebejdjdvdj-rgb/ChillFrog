@@ -25,7 +25,7 @@
     const titleMap=map[document.title];if(titleMap)document.title=titleMap;
     document.querySelectorAll("[placeholder]").forEach(el=>{if(map[el.placeholder])el.placeholder=map[el.placeholder]});
     document.querySelectorAll("[aria-label]").forEach(el=>{if(map[el.getAttribute("aria-label")])el.setAttribute("aria-label",map[el.getAttribute("aria-label")])});
-    const toggle=document.getElementById("language-toggle");if(toggle){toggle.textContent=lang==="en"?"ES":"EN";toggle.setAttribute("aria-label",lang==="en"?"Cambiar a español":"Switch to English");toggle.setAttribute("aria-pressed",String(lang==="es"));}
+    const toggle=document.getElementById("language-toggle");if(toggle){const nextLabel=lang==="en"?"ES":"EN";if(toggle.textContent!==nextLabel)toggle.textContent=nextLabel;toggle.setAttribute("aria-label",lang==="en"?"Cambiar a español":"Switch to English");toggle.setAttribute("aria-pressed",String(lang==="es"));}
     document.documentElement.dataset.language=lang;
     try{localStorage.setItem(key,lang)}catch{}
   };
