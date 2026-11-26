@@ -334,3 +334,10 @@ html.ash-building .ash-section-active{opacity:1!important;filter:none!important;
 .moderation-actions{display:flex;gap:6px;flex-shrink:0}.moderation-actions button{padding:8px 10px;border:1px solid #ffffff2c;border-radius:6px;background:#ffffff10;color:white;font-size:8px;cursor:pointer}
 .moderation-actions .approve{background:#d7ff45;color:#172a18;border:0}
 @media(max-width:760px){.community-access{grid-template-columns:1fr}.moderation-item{align-items:flex-start;flex-direction:column}.hub-card{padding:17px}}
+
+.buyer-leaderboard{flex:1;min-width:0;display:flex;gap:8px;align-items:center;overflow-x:auto}
+.buyer-empty{color:#aebd9d;font-size:9px;line-height:1.6}
+.buyer-chip{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid #ffffff20;border-radius:8px;background:#ffffff08}
+.buyer-chip b{font:800 12px Syne;color:#f2bd42}.buyer-chip span{font:700 9px monospace;color:#fff4d7}.buyer-chip strong{font:700 9px Syne;color:#d7ff45}
+.buyer-chip button{border:0;background:none;color:#aebd9d;font-size:7px;cursor:pointer}
+@media(max-width:760px){.buyer-leaderboard{order:3;flex-basis:100%;flex-wrap:wrap}.buyers-inner>a{margin-left:auto}}
