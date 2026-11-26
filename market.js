@@ -10,7 +10,7 @@
  async function load(){try{
   const response=await fetch("https://api.jup.ag/tokens/v2/search?query="+encodeURIComponent(mint),{headers:{accept:"application/json"},cache:"no-store"});
   if(!response.ok)throw new Error("Jupiter returned "+response.status);
-  const payload=await response.json(),token=Array.isArray(payload)?payload.find(x=>x.id===mint||x.address===mint)||payload[0]:payload?.tokens?.find(x=>x.id===mint)||payload;
+  const payload=await response.json(),token=Array.isArray(payload)?payload.find(x=>x.id===mint||x.address===mint):payload?.tokens?.find(x=>x.id===mint)||payload;
   if(!token||!(token.usdPrice||token.price))throw new Error("Token data not indexed by Jupiter");
   const price=find(token,["usdPrice","price"]),mcap=find(token,["mcap","marketCap"]),liq=find(token,["liquidity","liquidityUsd"]),holders=find(token,["holderCount","holders"]),stats=token.stats24h||token.stats?.["24h"]||token.stats?.h24||{};
   const vol=find(token,["volume24h","volume24H","stats24h.volume","stats.h24.volume"]);
