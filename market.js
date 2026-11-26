@@ -13,7 +13,7 @@
   const payload=await response.json(),token=Array.isArray(payload)?payload.find(x=>x.id===mint||x.address===mint)||payload[0]:payload?.tokens?.find(x=>x.id===mint)||payload;
   if(!token||!(token.usdPrice||token.price))throw new Error("Token data not indexed by Jupiter");
   const price=find(token,["usdPrice","price"]),mcap=find(token,["mcap","marketCap"]),liq=find(token,["liquidity","liquidityUsd"]),holders=find(token,["holderCount","holders"]),stats=token.stats24h||token.stats?.["24h"]||token.stats?.h24||{};
-  const vol=find(token,["volume24h","volume24H","stats24h.volume","stats24h.buyVolume","stats.h24.volume","stats.h24.buyVolume"]);
+  const vol=find(token,["volume24h","volume24H","stats24h.volume","stats.h24.volume"]);
   const buy=find(stats,["buyVolume","buy_volume","volumeBuy"]),sell=find(stats,["sellVolume","sell_volume","volumeSell"]),volume=vol??(buy!==null&&sell!==null?buy+sell:null);
   const change=find(token,["priceChange24h","stats24h.priceChange","stats.h24.priceChange"]);
   el["market-price"].textContent=money(price);el["market-mcap"].textContent=mcap===null?"—":"$"+compact(mcap);el["market-liquidity"].textContent=liq===null?"—":"$"+compact(liq);el["market-holders"].textContent=holders===null?"—":compact(holders);el["market-volume"].textContent=volume===null?"—":"$"+compact(volume);
