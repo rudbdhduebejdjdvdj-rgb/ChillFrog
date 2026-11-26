@@ -1,5 +1,6 @@
-// Public Supabase settings only. The publishable key is safe for browser use with RLS enabled.
+// Public browser configuration. Supabase publishable keys are designed for client-side use.
+// Never put a service_role key or third-party API secret in this file.
 window.CHILLFROG_SUPABASE = {
-  url: "",
-  publishableKey: ""
+  url: "https://midvsqiktryxnikutoqa.supabase.co",
+  publishableKey: "sb_publishable_0aH8-dCXRIYKYwZ5qBlt6g_UxAIkx6T"
 };
