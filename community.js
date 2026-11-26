@@ -191,8 +191,46 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     $("community-moderation").hidden=false;
     const box=$("community-pending");const {data,error}=await db.from("community_posts").select("id,kind,title,body,created_at,community_profiles(handle)").eq("status","pending").order("created_at").limit(30);
     box.replaceChildren();if(error){box.append(el("p","",error.message));return}
-    if(!data?.length){box.append(el("div","hub-empty","The moderation queue is clear."));return}
+    if(!data?.length){box.append(el("div","hub-empty","The post queue is clear."));}
     data.forEach(post=>{const item=el("div","moderation-item"),copy=el("div");copy.append(el("strong","",post.title+" · @"+(post.community_profiles?.handle||"member")),el("p","",post.body));const actions=el("div","moderation-actions");for(const [label,value] of [["APPROVE","approved"],["REJECT","rejected"]]){const b=el("button",value==="approved"?"approve":"",label);b.type="button";b.addEventListener("click",async()=>{b.disabled=true;const {error}=await db.from("community_posts").update({status:value}).eq("id",post.id);if(error){setMessage(postStatus,error.message,true);b.disabled=false}else{item.remove();refreshAll()}});actions.append(b)}item.append(copy,actions);box.append(item)});
+    await loadReportQueue();
+    await loadMissionQueue();
+  }
+  async function loadReportQueue() {
+    const box=$("community-reports"); if(!box)return;
+    const {data,error}=await db.from("community_reports").select("id,reason,details,created_at,community_posts(title),community_profiles(handle)").eq("status","open").order("created_at").limit(30);
+    box.replaceChildren();
+    if(error){box.append(el("p","",error.message));return}
+    if(!data?.length){box.append(el("div","hub-empty","No open reports."));return}
+    data.forEach(report=>{
+      const item=el("div","moderation-item"),copy=el("div");
+      copy.append(el("strong","",report.reason.toUpperCase()+" · "+(report.community_posts?.title||"Post")),el("p","",report.details||"No extra details"),el("small","", "@"+(report.community_profiles?.handle||"member")));
+      const actions=el("div","moderation-actions");
+      for(const [label,value] of [["MARK REVIEWED","reviewed"],["DISMISS","dismissed"]]){
+        const b=el("button","",label);b.type="button";
+        b.addEventListener("click",async()=>{b.disabled=true;const {error}=await db.from("community_reports").update({status:value}).eq("id",report.id);if(error){setMessage(postStatus,error.message,true);b.disabled=false}else item.remove()});
+        actions.append(b);
+      }
+      item.append(copy,actions);box.append(item);
+    });
+  }
+  async function loadMissionQueue() {
+    const box=$("community-mission-queue"); if(!box)return;
+    const {data,error}=await db.from("community_mission_completions").select("id,note,created_at,community_missions(title),community_profiles(handle)").eq("status","pending").order("created_at").limit(30);
+    box.replaceChildren();
+    if(error){box.append(el("p","",error.message));return}
+    if(!data?.length){box.append(el("div","hub-empty","No mission submissions waiting for review."));return}
+    data.forEach(submission=>{
+      const item=el("div","moderation-item"),copy=el("div");
+      copy.append(el("strong","",(submission.community_missions?.title||"Mission")+" · @"+(submission.community_profiles?.handle||"member")),el("p","",submission.note||"No note"));
+      const actions=el("div","moderation-actions");
+      for(const [label,value] of [["APPROVE","approved"],["REJECT","rejected"]]){
+        const b=el("button",value==="approved"?"approve":"",label);b.type="button";
+        b.addEventListener("click",async()=>{b.disabled=true;const {error}=await db.from("community_mission_completions").update({status:value}).eq("id",submission.id);if(error){setMessage(postStatus,error.message,true);b.disabled=false}else item.remove()});
+        actions.append(b);
+      }
+      item.append(copy,actions);box.append(item);
+    });
   }
   async function refreshAll() {
     const [leader,feed]=await Promise.all([
