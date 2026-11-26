@@ -166,7 +166,8 @@ grant select on public.community_profiles, public.community_posts, public.commun
 grant insert, update on public.community_profiles to authenticated;
 grant insert, delete on public.community_posts to authenticated;
 grant select, insert, delete on public.community_post_likes to authenticated;
-grant select on public.community_poll_votes to authenticated;
+revoke all on public.community_poll_votes from anon, authenticated;
+grant select (poll_id,option_id,created_at) on public.community_poll_votes to authenticated;
 grant insert, delete on public.community_poll_votes to authenticated;
 grant insert, select on public.community_reports to authenticated;
 grant insert, select on public.community_mission_completions to authenticated;
@@ -190,3 +191,57 @@ create policy "Users delete their own community media" on storage.objects
 for delete to authenticated using (
   bucket_id='community-media' and (storage.foldername(name))[1]=(select auth.uid())::text
 );
+
+-- Moderator identities are provisioned manually by the project owner; there is no public self-promotion path.
+create table if not exists public.community_moderators (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table public.community_moderators enable row level security;
+create policy "Moderators can see their own role" on public.community_moderators
+for select to authenticated using ((select auth.uid()) = user_id);
+grant select on public.community_moderators to authenticated;
+
+create policy "Moderators can update post moderation status" on public.community_posts
+for update to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant update on public.community_posts to authenticated;
+
+create policy "Moderators can review reports" on public.community_reports
+for select to authenticated using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+create policy "Moderators can update reports" on public.community_reports
+for update to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant update on public.community_reports to authenticated;
+
+create policy "Moderators manage events" on public.community_events
+for all to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant insert, update, delete on public.community_events to authenticated;
+
+create policy "Moderators manage polls" on public.community_polls
+for all to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant insert, update, delete on public.community_polls to authenticated;
+
+create policy "Moderators manage poll options" on public.community_poll_options
+for all to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant insert, update, delete on public.community_poll_options to authenticated;
+
+create policy "Moderators manage missions" on public.community_missions
+for all to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant insert, update, delete on public.community_missions to authenticated;
+
+create policy "Moderators review mission completions" on public.community_mission_completions
+for update to authenticated
+using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
+with check (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+grant update on public.community_mission_completions to authenticated;
