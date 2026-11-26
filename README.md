@@ -50,3 +50,7 @@ Supabase Free can pause projects after prolonged inactivity and does not include
 - Team data is stored in the ChillFrog Supabase project with RLS enabled. Admins can manage profiles, tasks and contribution records. No service-role key is exposed in the browser.
 - Before enabling HQ sign-in, configure custom SMTP and CAPTCHA in Supabase Auth, test the email flow, then set `emailAuthReady: true` in `community-config.js`.
 - To provision the two administrators: each person must sign in once after email auth is enabled. In Supabase SQL Editor, find their auth user UUIDs in Authentication → Users and insert them into `public.team_admins` with roles `founder` and `co_founder`. Never allow users to assign themselves admin roles.
+
+
+### Community display names
+The optional public nickname feature is introduced by migration `20261126000300_community_display_names.sql`. Apply this migration in the Supabase SQL Editor before enabling member sign-in. Members can choose a 2–24 character public nickname; otherwise the generated Froggy ID remains visible. Email addresses are never shown. The UI explicitly warns members not to use full names, phone numbers or private details.
