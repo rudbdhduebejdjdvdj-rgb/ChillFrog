@@ -12,9 +12,15 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     setStatus("SUPABASE PROJECT NOT CONNECTED");
     setMessage(authStatus, "Community accounts are waiting for the dedicated ChillFrog Supabase project.");
     setMessage(postStatus, "Posting, voting and the leaderboard activate after the secure database is connected.");
+    $("community-handle") && ($("community-handle").disabled = true);
+    $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = true);
+    $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach(n => n.disabled = true);
+    $("meme-submit") && ($("meme-submit").disabled = true);
     return;
   }
 
+  $("community-handle") && ($("community-handle").disabled = false);
+  $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = false);
   const db = createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
