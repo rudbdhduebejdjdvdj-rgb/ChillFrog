@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17351f">
+<meta name="description" content="ChillFrog community — good vibes, open minds and big dreams.">
+<title>The Swamp — ChillFrog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body><div class="grain"></div><header class="header"><a class="logo" href="index.html"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="index.html#historia">Our story</a><a href="index.html#token">The token</a><a href="index.html#comprar">Swap CFROG</a><a href="index.html#roadmap">Roadmap</a><a href="index.html#faq">FAQ</a><a href="the-swamp.html">The Swamp</a><a href="create.html">Create Something</a><a href="tienda.html">Tienda</a><a class="nav-cta" href="the-swamp.html">Join the swamp ↗</a></nav></header><main id="inicio">
+<section class="community-hub" id="community-hub">
+<div class="hub-inner"><div class="eyebrow">THE CHILLFROG COMMUNITY</div>
+<div class="hub-heading"><div><h2>WELCOME TO<br><span>THE SWAMP.</span></h2><p>Meet the community, share ideas, take part in polls, missions and events.</p></div><div class="hub-status" id="community-status"><i></i><span>CONNECTING COMMUNITY</span></div></div>
+<div class="community-access">
+<form id="community-profile-form" class="hub-card profile-card">
+<div class="hub-card-head"><div><small>SECURE MEMBER ACCESS</small><h3>JOIN WITH EMAIL</h3></div><span>🐸</span></div>
+<label for="community-email">EMAIL ADDRESS</label><input id="community-email" name="email" type="email" maxlength="254" placeholder="you@example.com" autocomplete="email" inputmode="email" required disabled>
+<button class="btn btn-lime" type="submit" disabled>SEND SIGN-IN LINK</button><p id="community-auth-status" class="hub-description">We will email you a secure sign-in link. Your email stays private and is never shown on your public profile.</p>
+</form>
+<form id="community-post-form" class="hub-card post-card">
+<div class="hub-card-head"><div><small>SHARE WITH THE SWAMP</small><h3>POST AN IDEA</h3></div><span>💡</span></div>
+<label for="community-post-kind">POST TYPE</label><select id="community-post-kind" disabled><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
+<label for="community-post-title">TITLE</label><input id="community-post-title" maxlength="80" placeholder="A new idea for ChillFrog" required disabled>
+<label for="community-post-body">DESCRIPTION</label><textarea id="community-post-body" maxlength="600" rows="3" placeholder="Tell the community about it…" required disabled></textarea>
+<label for="community-post-image">IMAGE (OPTIONAL)</label><input id="community-post-image" type="file" accept="image/png,image/jpeg,image/webp" disabled>
+<button class="btn btn-lime" type="submit" disabled>SEND FOR REVIEW ↗</button><p id="community-post-status" class="hub-description">Posts are checked by moderators before appearing publicly.</p>
+</form>
+</div>
+<div class="hub-grid">
+<article class="hub-card hub-leaderboard"><div class="hub-card-head"><div><small>COMMUNITY RANKING</small><h3>THE SWAMP TOP 5</h3></div><span>🏆</span></div><div id="community-leaderboard" class="leaderboard-list"><div class="hub-empty">Connect to load the community leaderboard.</div></div><small class="hub-footnote">Points come from approved posts and missions — never from token purchases.</small></article>
+<article class="hub-card hub-activity"><div class="hub-card-head"><div><small>COMMUNITY CALENDAR</small><h3>EVENTS & AMAS</h3></div><span>📡</span></div><div id="community-events" class="hub-empty">Official community events will appear here.</div><div class="hub-card-head hub-subhead"><div><small>HAVE YOUR SAY</small><h3>OPEN POLLS</h3></div><span>🗳️</span></div><div id="community-polls" class="hub-empty">No live polls loaded.</div></article>
+</div>
+<div class="hub-bottom-grid">
+<article class="hub-card"><div class="hub-card-head"><div><small>WEEKLY CHALLENGES</small><h3>FROGGY MISSIONS</h3></div><span>🎯</span></div><div id="community-missions" class="hub-empty">Community challenges will appear here.</div></article>
+<article class="hub-card"><div class="hub-card-head"><div><small>COMMUNITY FEED</small><h3>FRESH FROM THE SWAMP</h3></div><span>🌱</span></div><div id="community-feed" class="community-feed"><div class="hub-empty">Approved memes and ideas will appear here.</div></div></article>
+</div>
+<div id="community-moderation" class="hub-card moderation-panel" hidden><div class="hub-card-head"><div><small>STAFF ONLY</small><h3>MODERATION QUEUE</h3></div><span>🛡️</span></div><div id="community-pending"></div></div>
+<p class="hub-safety">Be kind. Never post private information, seed phrases, recovery words or contact details. Posts are moderated before publication.</p>
+
+</div></section>
+</main><footer><a class="logo" href="#inicio">🐸 CHILL<span>FROG</span></a><p>Two creators. One unique vibe.</p><div class="footer-social"><a href="https://x.com/ChillFrogCoinsl" target="_blank" rel="noopener noreferrer">X</a><a href="https://t.me/+lzFqH1yYBng5ZDA0" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://www.tiktok.com/@morta6767" target="_blank" rel="noopener noreferrer">TikTok</a></div><small>© <span id="year"></span> ChillFrog</small></footer><div class="disclaimer">ChillFrog is a community project. Nothing on this website is an investment offer or financial advice. Crypto assets are high-risk. CFROG is live on pump.fun. Always verify the official mint address before trading.</div><script src="meme.js" defer></script>
+<script src="community-config.js" defer></script>
+<script type="module" src="community.js"></script>
+<script src="script.js"></script></body></html>
