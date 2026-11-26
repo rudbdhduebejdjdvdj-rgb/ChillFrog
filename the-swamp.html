@@ -18,6 +18,14 @@
 <label for="community-email">EMAIL ADDRESS</label><input id="community-email" name="email" type="email" maxlength="254" placeholder="you@example.com" autocomplete="email" inputmode="email" required disabled>
 <div id="community-captcha" class="community-captcha"></div><button class="btn btn-lime" type="submit" disabled>SEND SIGN-IN LINK</button><p id="community-auth-status" class="hub-description">We will email you a secure sign-in link. Your email stays private and is never shown on your public profile.</p>
 </form>
+<section id="community-profile-settings" class="hub-card profile-settings" hidden>
+  <div class="hub-card-head"><div><small>YOUR PUBLIC IDENTITY</small><h3>CHOOSE YOUR NAME</h3></div><span>✍️</span></div>
+  <label for="community-display-name">DISPLAY NAME (OPTIONAL)</label>
+  <input id="community-display-name" type="text" maxlength="24" minlength="2" placeholder="Your public nickname" autocomplete="nickname">
+  <button id="community-profile-save" class="btn btn-social" type="button">SAVE PUBLIC NAME</button>
+  <p class="hub-description">Your email stays private. Choose a nickname; never use your full name, phone number or other private details. Leave blank to use your automatic Froggy ID.</p>
+  <p id="community-profile-status" class="hub-description" role="status"></p>
+</section>
 <form id="community-post-form" class="hub-card post-card">
 <div class="hub-card-head"><div><small>SHARE WITH THE SWAMP</small><h3>POST AN IDEA</h3></div><span>💡</span></div>
 <label for="community-post-kind">POST TYPE</label><select id="community-post-kind" disabled><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
