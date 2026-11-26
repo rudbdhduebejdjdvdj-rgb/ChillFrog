@@ -281,3 +281,18 @@ $$;
 create trigger community_posts_rate_limit
 before insert on public.community_posts
 for each row execute function public.enforce_community_post_rate_limit();
+
+-- Separate on-chain buyer leaderboard, populated only by a trusted server-side indexer.
+create table if not exists public.token_buyer_leaderboard (
+  period text not null check (period in ('24h','all_time')),
+  wallet_address text not null check (char_length(wallet_address) between 32 and 64),
+  buy_volume_usd numeric(24,8) not null default 0 check (buy_volume_usd >= 0),
+  buy_count integer not null default 0 check (buy_count >= 0),
+  last_buy_at timestamptz,
+  updated_at timestamptz not null default now(),
+  primary key (period,wallet_address)
+);
+alter table public.token_buyer_leaderboard enable row level security;
+create policy "Buyer leaderboard is public" on public.token_buyer_leaderboard
+for select to anon, authenticated using (true);
+grant select on public.token_buyer_leaderboard to anon, authenticated;
