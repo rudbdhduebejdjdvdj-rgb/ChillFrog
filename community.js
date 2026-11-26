@@ -20,8 +20,34 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   }
 
   
-  $("community-profile-form")?.querySelector("button") && ($("community-profile-form").querySelector("button").disabled = false);
-  $("community-email") && ($("community-email").disabled = false);
+  let captchaToken = null, captchaWidgetId = null;
+  const loginButton = $("community-profile-form")?.querySelector("button");
+  const emailInput = $("community-email");
+  const captchaBox = $("community-captcha");
+  const authReady = config.emailAuthReady === true && Boolean(config.turnstileSiteKey);
+  if (emailInput) emailInput.disabled = !authReady;
+  if (loginButton) loginButton.disabled = !authReady;
+  if (!config.emailAuthReady) setMessage(authStatus, "Email registration is temporarily closed while production email delivery is configured.");
+  else if (!config.turnstileSiteKey) setMessage(authStatus, "Secure sign-in is waiting for anti-bot protection to be configured.");
+  async function setupCaptcha() {
+    if (!config.turnstileSiteKey || !captchaBox) return;
+    if (!window.turnstile) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true; script.defer = true;
+        script.onload = resolve; script.onerror = () => reject(new Error("Could not load anti-bot protection."));
+        document.head.append(script);
+      });
+    }
+    captchaWidgetId = window.turnstile.render(captchaBox, {
+      sitekey: config.turnstileSiteKey,
+      callback: token => { captchaToken = token; },
+      "expired-callback": () => { captchaToken = null; },
+      "error-callback": () => { captchaToken = null; setMessage(authStatus, "Anti-bot check failed. Please try again.", true); }
+    });
+  }
+  setupCaptcha().catch(error => setMessage(authStatus, error.message, true));
   const db = createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
@@ -69,9 +95,10 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     if (current.session?.user?.is_anonymous) await db.auth.signOut();
     const { error } = await db.auth.signInWithOtp({
       email: cleanEmail,
-      options: { emailRedirectTo: window.location.origin + window.location.pathname }
+      options: { emailRedirectTo: window.location.origin + window.location.pathname, captchaToken }
     });
     if (error) throw error;
+    if (window.turnstile && captchaWidgetId !== null) { window.turnstile.reset(captchaWidgetId); captchaToken = null; }
     setMessage(authStatus, "Check your inbox. We sent you a secure sign-in link. Your email will never appear publicly.");
   }
   async function uploadImage(file) {
