@@ -91,16 +91,16 @@
 <div class="community-access">
 <form id="community-profile-form" class="hub-card profile-card">
 <div class="hub-card-head"><div><small>YOUR SWAMP ID</small><h3>JOIN AS A GUEST</h3></div><span>🐸</span></div>
-<label for="community-handle">PUBLIC NICKNAME</label><input id="community-handle" name="handle" maxlength="18" minlength="3" pattern="[A-Za-z0-9_]{3,18}" placeholder="FroggyFan_01" autocomplete="off" required>
-<button class="btn btn-lime" type="submit">JOIN THE COMMUNITY</button><p id="community-auth-status" class="hub-description">No email or real name required. Choose a nickname; do not use personal information.</p>
+<label for="community-handle">PUBLIC NICKNAME</label><input id="community-handle" name="handle" maxlength="18" minlength="3" pattern="[A-Za-z0-9_]{3,18}" placeholder="FroggyFan_01" autocomplete="off" required disabled>
+<button class="btn btn-lime" type="submit" disabled>JOIN THE COMMUNITY</button><p id="community-auth-status" class="hub-description">No email or real name required. Choose a nickname; do not use personal information.</p>
 </form>
 <form id="community-post-form" class="hub-card post-card">
 <div class="hub-card-head"><div><small>SHARE WITH THE SWAMP</small><h3>POST AN IDEA</h3></div><span>💡</span></div>
-<label for="community-post-kind">POST TYPE</label><select id="community-post-kind"><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
-<label for="community-post-title">TITLE</label><input id="community-post-title" maxlength="80" placeholder="A new idea for ChillFrog" required>
-<label for="community-post-body">DESCRIPTION</label><textarea id="community-post-body" maxlength="600" rows="3" placeholder="Tell the community about it…" required></textarea>
-<label for="community-post-image">IMAGE (OPTIONAL)</label><input id="community-post-image" type="file" accept="image/png,image/jpeg,image/webp">
-<button class="btn btn-lime" type="submit">SEND FOR REVIEW ↗</button><p id="community-post-status" class="hub-description">Posts are checked by moderators before appearing publicly.</p>
+<label for="community-post-kind">POST TYPE</label><select id="community-post-kind" disabled><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
+<label for="community-post-title">TITLE</label><input id="community-post-title" maxlength="80" placeholder="A new idea for ChillFrog" required disabled>
+<label for="community-post-body">DESCRIPTION</label><textarea id="community-post-body" maxlength="600" rows="3" placeholder="Tell the community about it…" required disabled></textarea>
+<label for="community-post-image">IMAGE (OPTIONAL)</label><input id="community-post-image" type="file" accept="image/png,image/jpeg,image/webp" disabled>
+<button class="btn btn-lime" type="submit" disabled>SEND FOR REVIEW ↗</button><p id="community-post-status" class="hub-description">Posts are checked by moderators before appearing publicly.</p>
 </form>
 </div>
 <div class="hub-grid">
@@ -121,7 +121,7 @@
 <label for="meme-top">TOP TEXT</label><input id="meme-top" maxlength="70" value="WHEN THE VIBE IS RIGHT">
 <label for="meme-bottom">BOTTOM TEXT</label><input id="meme-bottom" maxlength="70" value="JUST CHILL, FROGGY">
 <label for="meme-image">ADD YOUR IMAGE (OPTIONAL)</label><input id="meme-image" type="file" accept="image/png,image/jpeg,image/webp">
-<div class="meme-actions"><button id="meme-generate" class="btn btn-lime" type="button">UPDATE PREVIEW</button><button id="meme-download" class="btn btn-dark" type="button">DOWNLOAD PNG ↓</button><button id="meme-submit" class="btn btn-social" type="button">SEND TO COMMUNITY ↗</button></div><small class="meme-local-note">Your image stays in your browser. Nothing is uploaded.</small></div>
+<div class="meme-actions"><button id="meme-generate" class="btn btn-lime" type="button">UPDATE PREVIEW</button><button id="meme-download" class="btn btn-dark" type="button">DOWNLOAD PNG ↓</button><button id="meme-submit" class="btn btn-social" type="button" disabled>SEND TO COMMUNITY ↗</button></div><small class="meme-local-note">Your image stays in your browser. Nothing is uploaded.</small></div>
 <div class="meme-preview-wrap"><canvas id="meme-canvas" width="1080" height="1080" aria-label="Meme preview"></canvas></div></div>
 </div></section>
 <section class="buyers-strip" aria-label="Top CFROG buyers">
