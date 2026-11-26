@@ -202,6 +202,9 @@ create policy "Moderators can see their own role" on public.community_moderators
 for select to authenticated using ((select auth.uid()) = user_id);
 grant select on public.community_moderators to authenticated;
 
+create policy "Moderators can view pending posts" on public.community_posts
+for select to authenticated using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())));
+
 create policy "Moderators can update post moderation status" on public.community_posts
 for update to authenticated
 using (exists (select 1 from public.community_moderators m where m.user_id=(select auth.uid())))
