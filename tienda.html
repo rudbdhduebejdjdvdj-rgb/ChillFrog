@@ -86,5 +86,6 @@ const button=document.querySelector(".menu"),nav=document.querySelector(".header
 button.addEventListener("click",()=>{const open=nav.classList.toggle("open");button.setAttribute("aria-expanded",String(open));button.textContent=open?"×":"☰"});
 nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");button.setAttribute("aria-expanded","false");button.textContent="☰"}));
 </script>
+<script src="i18n.js"></script>
 </body>
 </html>
