@@ -149,7 +149,7 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
  function resize(){dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
  function targetsFor(el){
   const selector="h1,h2,h3,h4,p,a,button,.pill,.micro,.orbit-label,li,label";
-  return [...el.querySelectorAll(selector)].filter(node=>node.children.length===0&&node.textContent.trim()&&node.getBoundingClientRect().width>0);
+  return [...el.querySelectorAll(selector)].filter(node=>(node.children.length===0||/^H[1-4]$/.test(node.tagName)||node.tagName==="A"||node.tagName==="BUTTON")&&node.textContent.trim()&&node.getBoundingClientRect().width>0);
  }
  function glyphPoints(node){
   const rect=node.getBoundingClientRect();if(rect.bottom<0||rect.top>h||rect.width<4||rect.height<4)return [];
