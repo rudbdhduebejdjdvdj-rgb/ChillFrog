@@ -131,7 +131,7 @@ create policy "Users remove their own likes" on public.community_post_likes for 
 create policy "Published events are public" on public.community_events for select to anon, authenticated using (status = 'published');
 create policy "Open and closed polls are public" on public.community_polls for select to anon, authenticated using (status in ('open','closed'));
 create policy "Options of public polls are public" on public.community_poll_options for select to anon, authenticated using (exists (select 1 from public.community_polls p where p.id = poll_id and p.status in ('open','closed')));
-create policy "Users see public poll votes" on public.community_poll_votes for select to authenticated using (true);
+create policy "Users see public poll vote totals" on public.community_poll_votes for select to anon, authenticated using (true);
 create policy "Users vote once per poll" on public.community_poll_votes for insert to authenticated with check ((select auth.uid()) = user_id and exists (select 1 from public.community_polls p where p.id = poll_id and p.status = 'open' and now() between p.starts_at and p.ends_at));
 create policy "Users may change their vote while poll is open" on public.community_poll_votes for delete to authenticated using ((select auth.uid()) = user_id and exists (select 1 from public.community_polls p where p.id = poll_id and p.status = 'open' and now() between p.starts_at and p.ends_at));
 
@@ -167,7 +167,7 @@ grant insert, update on public.community_profiles to authenticated;
 grant insert, delete on public.community_posts to authenticated;
 grant select, insert, delete on public.community_post_likes to authenticated;
 revoke all on public.community_poll_votes from anon, authenticated;
-grant select (poll_id,option_id,created_at) on public.community_poll_votes to authenticated;
+grant select (poll_id,option_id,created_at) on public.community_poll_votes to anon, authenticated;
 grant insert, delete on public.community_poll_votes to authenticated;
 grant insert, select on public.community_reports to authenticated;
 grant insert, select on public.community_mission_completions to authenticated;
