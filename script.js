@@ -189,14 +189,20 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
   const header=document.querySelector("header"),sections=[...document.querySelectorAll("main>section,main>.buyers-strip")],footer=document.querySelector("footer"),sequence=[header,...sections,footer].filter(Boolean);
   root.classList.remove("ash-loading");root.classList.add("ash-building");
   for(const block of sequence){
-   window.scrollTo({top:Math.max(0,block.getBoundingClientRect().top+scrollY-18),behavior:"instant"});
+   window.scrollTo({top:Math.max(0,block.getBoundingClientRect().top+scrollY-18),behavior:"auto"});
    block.classList.add("ash-section-active");
    const nodes=targetsFor(block);nodes.forEach(n=>n.classList.add("ash-copy-hidden"));
-   await sleep(240);
-   const glyphs=makeGlyphParticles(nodes);
-   if(glyphs.length)await startAshStream(glyphs);
-   nodes.forEach(n=>{n.classList.remove("ash-copy-hidden");n.classList.add("ash-copy-visible")});
-   await sleep(130);
+   await sleep(180);
+   const pending=new Set(nodes);
+   while(pending.size){
+    const visible=[...pending].filter(n=>{const r=n.getBoundingClientRect();return r.bottom>8&&r.top<h-8});
+    if(!visible.length){const next=[...pending][0];window.scrollTo({top:Math.max(0,next.getBoundingClientRect().top+scrollY-90),behavior:"auto"});await sleep(180);continue}
+    const glyphs=makeGlyphParticles(visible);
+    if(glyphs.length)await startAshStream(glyphs);
+    visible.forEach(n=>{n.classList.remove("ash-copy-hidden");n.classList.add("ash-copy-visible");pending.delete(n)});
+    await sleep(70);
+    if(pending.size){const lowest=Math.max(...visible.map(n=>n.getBoundingClientRect().bottom));window.scrollTo({top:Math.max(0,scrollY+Math.max(90,lowest-h*.62)),behavior:"smooth"});await sleep(360)}
+   }
   }
   // Final downward ash fall across the last viewport, then hand control back to the visitor.
   const endY=Math.max(0,document.documentElement.scrollHeight-innerHeight);window.scrollTo({top:endY,behavior:"smooth"});
