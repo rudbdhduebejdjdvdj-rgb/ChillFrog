@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body><div class="grain"></div><header class="header"><a class="logo" href="index.html"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="index.html#historia">Our story</a><a href="index.html#token">The token</a><a href="index.html#comprar">Swap CFROG</a><a href="index.html#roadmap">Roadmap</a><a href="index.html#faq">FAQ</a><a href="the-swamp.html">The Swamp</a><a href="create.html">Create Something</a><a href="tienda.html">Tienda</a><a class="nav-cta" href="the-swamp.html">Join the swamp ↗</a></nav></header><main id="inicio">
+<body><div class="grain"></div><header class="header"><a class="logo" href="index.html"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button><nav><a href="index.html">Home</a><a href="token.html">CFROG</a><a href="roadmap.html">Roadmap</a><a href="froggy-world.html">Froggy World</a><a href="the-swamp.html">The Swamp</a><a href="create.html">Meme Studio</a><a href="ideas.html">Community ideas</a><a href="invest.html">Collaborate</a><a href="faq.html">FAQ</a><a href="team.html">Our Team</a><a class="nav-cta" href="the-swamp.html">Join the swamp ↗</a></nav></header><main id="inicio">
 <section class="community-hub" id="community-hub">
 <div class="hub-inner"><div class="eyebrow">THE CHILLFROG COMMUNITY</div>
 <div class="hub-heading"><div><h2>WELCOME TO<br><span>THE SWAMP.</span></h2><p>Meet the community, share ideas, take part in polls, missions and events.</p></div><div class="hub-status" id="community-status"><i></i><span>CONNECTING COMMUNITY</span></div></div>
@@ -18,6 +18,14 @@
 <label for="community-email">EMAIL ADDRESS</label><input id="community-email" name="email" type="email" maxlength="254" placeholder="you@example.com" autocomplete="email" inputmode="email" required disabled>
 <div id="community-captcha" class="community-captcha"></div><button class="btn btn-lime" type="submit" disabled>SEND SIGN-IN LINK</button><p id="community-auth-status" class="hub-description">We will email you a secure sign-in link. Your email stays private and is never shown on your public profile.</p>
 </form>
+<section id="community-profile-settings" class="hub-card profile-settings" hidden>
+  <div class="hub-card-head"><div><small>YOUR PUBLIC IDENTITY</small><h3>CHOOSE YOUR NAME</h3></div><span>✍️</span></div>
+  <label for="community-display-name">DISPLAY NAME (OPTIONAL)</label>
+  <input id="community-display-name" type="text" maxlength="24" minlength="2" placeholder="Your public nickname" autocomplete="nickname">
+  <button id="community-profile-save" class="btn btn-social" type="button">SAVE PUBLIC NAME</button>
+  <p class="hub-description">Your email stays private. Choose a nickname; never use your full name, phone number or other private details. Leave blank to use your automatic Froggy ID.</p>
+  <p id="community-profile-status" class="hub-description" role="status"></p>
+</section>
 <form id="community-post-form" class="hub-card post-card">
 <div class="hub-card-head"><div><small>SHARE WITH THE SWAMP</small><h3>POST AN IDEA</h3></div><span>💡</span></div>
 <label for="community-post-kind">POST TYPE</label><select id="community-post-kind" disabled><option value="idea">Idea / suggestion</option><option value="meme">Meme / creation</option></select>
@@ -42,4 +50,5 @@
 </main><footer><a class="logo" href="#inicio">🐸 CHILL<span>FROG</span></a><p>Two creators. One unique vibe.</p><div class="footer-social"><a href="https://x.com/ChillFrogCoinsl" target="_blank" rel="noopener noreferrer">X</a><a href="https://t.me/+lzFqH1yYBng5ZDA0" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://www.tiktok.com/@morta6767" target="_blank" rel="noopener noreferrer">TikTok</a></div><small>© <span id="year"></span> ChillFrog</small></footer><div class="disclaimer">ChillFrog is a community project. Nothing on this website is an investment offer or financial advice. Crypto assets are high-risk. CFROG is live on pump.fun. Always verify the official mint address before trading.</div><script src="meme.js" defer></script>
 <script src="community-config.js" defer></script>
 <script type="module" src="community.js"></script>
-<script src="script.js"></script></body></html>
+<script src="script.js"></script><script src="i18n.js"></script>
+</body></html>

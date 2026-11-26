@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102719">
+<meta name="description" content="Explore Froggy World: mini-games, missions, community creations and collectible ChillFrog badges.">
+<title>Froggy World — ChillFrog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="froggy-world.css">
+</head>
+<body><div class="grain"></div>
+<header class="header"><a class="logo" href="index.html"><span class="logo-frog">🐸</span> CHILL<span>FROG</span></a><button class="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+<nav><a href="index.html">Home</a><a href="token.html">CFROG</a><a href="roadmap.html">Roadmap</a><a href="froggy-world.html">Froggy World</a><a href="the-swamp.html">The Swamp</a><a href="create.html">Meme Studio</a><a href="ideas.html">Community ideas</a><a href="invest.html">Collaborate</a><a href="faq.html">FAQ</a><a href="team.html">Our Team</a><a class="nav-cta" href="the-swamp.html">Join the swamp ↗</a></nav></header>
+<main>
+<section class="fw-hero">
+ <div class="fw-hero-copy"><div class="eyebrow">THE CHILLFROG UNIVERSE · EXPLORE TOGETHER</div>
+ <h1>WELCOME TO<br><span>FROGGY WORLD.</span></h1>
+ <p>A little world with big energy. Play, create, complete community missions and help shape what we build next.</p>
+ <div class="fw-actions"><a class="btn btn-lime" href="#arcade">PLAY A GAME ↓</a><a class="btn btn-social" href="the-swamp.html">ENTER THE SWAMP ↗</a></div>
+ <small class="fw-honesty">Built for fun and community. No financial promises, no pay-to-win.</small></div>
+ <button class="fw-hero-frog" id="secret-frog" type="button" aria-label="Tap Froggy for a secret">🐸<span>tap for a little secret</span></button>
+</section>
+<section class="fw-playerbar" aria-label="Your local progress">
+ <article><small>YOUR BEST HOP</small><strong id="fw-best">0</strong><span>points · this device</span></article>
+ <article><small>YOUR STREAK</small><strong id="fw-streak">0 🔥</strong><span>days played · this device</span></article>
+ <article><small>BADGES FOUND</small><strong id="fw-badges">0/4</strong><span>local collection</span></article>
+ <article><small>WORLD STATUS</small><strong class="fw-live-status">GROWING</strong><span>new zones in development</span></article>
+</section>
+<section class="fw-section" id="map">
+ <div class="fw-section-head"><div><div class="eyebrow">01 / EXPLORE</div><h2>THE WORLD<br><span>IS YOURS TO SHAPE.</span></h2></div><p>Pick a place to explore. Some areas are playable now; others will open as the community grows.</p></div>
+ <div class="fw-map-grid">
+  <a class="fw-zone fw-zone-open" href="#arcade"><div class="fw-zone-art pond-art"><span>🌿</span><b>🐸</b></div><div class="fw-zone-copy"><small>ZONE 01 · OPEN</small><h3>THE POND</h3><p>Start hopping, beat your personal best and collect your first badge.</p><strong>EXPLORE ↗</strong></div></a>
+  <a class="fw-zone fw-zone-open" href="create.html"><div class="fw-zone-art meme-art"><span>✨</span><b>🎨</b></div><div class="fw-zone-copy"><small>ZONE 02 · OPEN</small><h3>MEME MARSH</h3><p>Make a meme, export it and share your creation with the community.</p><strong>CREATE ↗</strong></div></a>
+  <a class="fw-zone fw-zone-open" href="the-swamp.html#community-missions"><div class="fw-zone-art mission-art"><span>🌙</span><b>🎯</b></div><div class="fw-zone-copy"><small>ZONE 03 · OPEN</small><h3>MISSION BOARD</h3><p>Find community challenges and help decide what happens next.</p><strong>VIEW MISSIONS ↗</strong></div></a>
+  <a class="fw-zone fw-zone-open" href="#cards"><div class="fw-zone-art card-art"><span>💎</span><b>🃏</b></div><div class="fw-zone-copy"><small>ZONE 04 · OPEN</small><h3>CARD CAVERN</h3><p>Collect your first Froggy character cards and unlock special designs as you play.</p><strong>VIEW COLLECTION ↗</strong></div></a>
+  <article class="fw-zone fw-zone-soon"><div class="fw-zone-art battle-art"><span>⚡</span><b>🏆</b></div><div class="fw-zone-copy"><small>ZONE 05 · IN DEVELOPMENT</small><h3>BATTLE BAY</h3><p>Friendly skill challenges, head-to-head games and seasonal competitions.</p><strong>COMING SOON</strong></div></article>
+  <a class="fw-zone fw-zone-open" href="the-swamp.html"><div class="fw-zone-art plaza-art"><span>🌈</span><b>👋</b></div><div class="fw-zone-copy"><small>ZONE 06 · OPEN</small><h3>COMMUNITY PLAZA</h3><p>Meet the crew, post ideas, vote in polls and see what the swamp is building.</p><strong>JOIN THE COMMUNITY ↗</strong></div></a>
+ </div>
+</section>
+<section class="fw-arcade" id="arcade">
+ <div class="fw-section-head"><div><div class="eyebrow">02 / THE ARCADE</div><h2>ONE MORE HOP.<br><span>YOU GOT THIS.</span></h2></div><p>Quick reflexes, zero pressure. Jump over the logs and see how far you can go.</p></div>
+ <div class="fw-game-shell">
+  <div class="fw-game-top"><div><small>MINI GAME 001</small><h3>LILY HOP</h3></div><div class="fw-game-score">SCORE <strong id="fw-score">0</strong></div></div>
+  <canvas id="fw-game" width="960" height="360" aria-label="Lily Hop mini game. Press space, click or tap to jump."></canvas>
+  <div class="fw-game-controls"><p id="fw-game-message">Press PLAY, then tap, click or press SPACE to jump.</p><button id="fw-play" class="btn btn-lime" type="button">PLAY LILY HOP ↗</button><button id="fw-jump" class="btn btn-social" type="button">JUMP</button></div>
+  <div class="fw-game-note">Your score and streak are saved only in this browser for now. They are not token rewards and do not affect the public leaderboard.</div>
+ </div>
+</section>
+<section class="fw-section fw-progress">
+ <div class="fw-section-head"><div><div class="eyebrow">03 / YOUR COLLECTION</div><h2>SMALL WINS.<br><span>GOOD MEMORIES.</span></h2></div><p>Earn playful badges by exploring. These are profile-style collectibles, not NFTs and not financial assets.</p></div>
+ <div class="fw-badges-grid" id="fw-badge-grid">
+  <article class="fw-badge-card" data-badge="first"><div>🐣</div><small>FIRST STEPS</small><h3>FIRST HOP</h3><p>Play your first round of Lily Hop.</p><span class="fw-badge-state">LOCKED</span></article>
+  <article class="fw-badge-card" data-badge="ten"><div>🍃</div><small>POND EXPLORER</small><h3>10 HOPS</h3><p>Reach a score of 10 in one round.</p><span class="fw-badge-state">LOCKED</span></article>
+  <article class="fw-badge-card" data-badge="twentyfive"><div>🌟</div><small>MARSH LEGEND</small><h3>25 HOPS</h3><p>Reach a score of 25 in one round.</p><span class="fw-badge-state">LOCKED</span></article>
+  <article class="fw-badge-card" data-badge="secret"><div>🌀</div><small>HIDDEN DISCOVERY</small><h3>SECRET VIBE</h3><p>Find Froggy's little secret.</p><span class="fw-badge-state">LOCKED</span></article>
+ </div>
+</section>
+<section class="fw-section fw-card-cavern" id="cards">
+ <div class="fw-section-head"><div><div class="eyebrow">04 / CARD CAVERN</div><h2>MEET THE<br><span>SWAMP CREW.</span></h2></div><p>A first set of browser-based character cards. Unlock them through play and exploration — no wallet, purchase or NFT required.</p></div>
+ <div class="fw-character-cards">
+  <article class="fw-character-card card-chill" data-card="chill"><div class="fw-card-top"><span>CFROG · 001</span><b>COMMON</b></div><div class="fw-card-art">🐸</div><h3>CHILL FROGGY</h3><p>The first friend you meet in the pond. Calm energy, big dreams.</p><small class="fw-card-unlock">STARTER CARD</small></article>
+  <article class="fw-character-card card-sunset" data-card="sunset"><div class="fw-card-top"><span>CFROG · 002</span><b>UNCOMMON</b></div><div class="fw-card-art">🌅</div><h3>SUNSET HOPPER</h3><p>Finds the perfect rhythm when the day slows down.</p><small class="fw-card-unlock">UNLOCK AT 10 HOPS</small></article>
+  <article class="fw-character-card card-neon" data-card="neon"><div class="fw-card-top"><span>CFROG · 003</span><b>RARE</b></div><div class="fw-card-art">🐸</div><h3>NEON CROAKER</h3><p>A bright spark from the deepest corner of Meme Marsh.</p><small class="fw-card-unlock">UNLOCK AT 25 HOPS</small></article>
+  <article class="fw-character-card card-secret" data-card="guardian"><div class="fw-card-top"><span>CFROG · 004</span><b>HIDDEN</b></div><div class="fw-card-art">🌀</div><h3>SWAMP GUARDIAN</h3><p>Only curious explorers discover this mysterious character.</p><small class="fw-card-unlock">FIND FROGGY'S SECRET</small></article>
+ </div>
+ <p class="fw-card-disclaimer">These are fun digital collectibles stored on this device. They are not NFTs, do not represent ownership and have no cash or token value.</p>
+</section>
+<section class="fw-live-grid">
+ <article class="fw-live-card"><div class="eyebrow">04 / DAILY QUESTS</div><h2>THE MISSION<br><span>BOARD.</span></h2><p>Community missions published by the team. Internal points are for participation only.</p><div id="fw-missions" class="fw-feed-list"><p class="fw-muted">Loading active missions…</p></div><a class="fw-inline-link" href="the-swamp.html">OPEN THE SWAMP ↗</a></article>
+ <article class="fw-live-card"><div class="eyebrow">05 / WHAT'S HAPPENING</div><h2>UPCOMING<br><span>GATHERINGS.</span></h2><p>AMAs, community calls, contests and seasonal events.</p><div id="fw-events" class="fw-feed-list"><p class="fw-muted">Loading upcoming events…</p></div><a class="fw-inline-link" href="the-swamp.html">COMMUNITY CALENDAR ↗</a></article>
+</section>
+<section class="fw-companion">
+ <div class="fw-companion-avatar">🐸</div><div><div class="eyebrow">06 / FROGGY COMPANION</div><h2>GOT AN IDEA?<br><span>ASK FROGGY.</span></h2><p>Your future guide to the world: game tips, project FAQs, creative prompts and help finding your next mission.</p><div class="fw-companion-status"><i></i> AI COMPANION · IN DEVELOPMENT</div></div>
+ <div class="fw-companion-side"><strong>COMING IN A FUTURE UPDATE</strong><span>We are preparing a secure server-side AI connection. Your API keys will never be exposed in the browser.</span><a href="the-swamp.html" class="btn btn-social">ASK THE COMMUNITY ↗</a></div>
+</section>
+<section class="fw-bottom-cta"><div class="eyebrow">07 / BUILD THE NEXT ZONE</div><h2>THIS WORLD IS<br><span>BUILT TOGETHER.</span></h2><p>Got a mini-game idea, a new Froggy character or an event concept? Bring it to the community.</p><div class="fw-actions"><a class="btn btn-lime" href="the-swamp.html">SHARE AN IDEA ↗</a><a class="btn btn-social" href="index.html#roadmap">SEE THE ROADMAP</a></div></section>
+</main>
+<footer><a class="logo" href="index.html">🐸 CHILL<span>FROG</span></a><p>Two creators. One unique vibe.</p><div class="footer-social"><a href="team.html">Our Team</a><a href="hq.html">Team HQ</a><a href="https://x.com/ChillFrogCoinsl" target="_blank" rel="noopener noreferrer">X</a><a href="https://t.me/+lzFqH1yYBng5ZDA0" target="_blank" rel="noopener noreferrer">Telegram</a></div><small>© <span id="year"></span> ChillFrog</small></footer>
+<div class="disclaimer">ChillFrog is a community project. Internal points and browser badges have no cash value and cannot be exchanged for tokens. Nothing on this website is financial advice. Crypto assets are high-risk.</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="community-config.js"></script><script src="froggy-world.js"></script><script src="script.js"></script>
+<script src="i18n.js"></script>
+</body></html>

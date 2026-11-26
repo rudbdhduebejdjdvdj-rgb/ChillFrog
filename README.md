@@ -10,6 +10,11 @@ Lightweight static community site hosted on GitHub Pages.
 - Supabase community: private email magic-link sign-in, automatically generated public IDs, moderated posts, likes, reports, polls, events, missions and contributor leaderboard.
 - Separate on-chain buyer leaderboard; requires a trusted indexer before it can show verified buys.
 
+## Froggy World
+- `froggy-world.html` is the interactive world hub with six zones, a playable Lily Hop mini-game, browser-local progress, four collectible-style badges, and public read-only mission/event listings from Supabase.
+- The current game score, streak and badges are local to the visitor browser. They do not grant public points, tokens, NFTs, or financial rewards.
+- Card Cavern, Battle Bay and the AI Companion are clearly marked in development; do not present them as live until their backend, moderation and security requirements are completed.
+
 ## Hosting
 GitHub Pages: Settings → Pages → Deploy from branch → `main` → `/(root)`.
 
@@ -45,3 +50,7 @@ Supabase Free can pause projects after prolonged inactivity and does not include
 - Team data is stored in the ChillFrog Supabase project with RLS enabled. Admins can manage profiles, tasks and contribution records. No service-role key is exposed in the browser.
 - Before enabling HQ sign-in, configure custom SMTP and CAPTCHA in Supabase Auth, test the email flow, then set `emailAuthReady: true` in `community-config.js`.
 - To provision the two administrators: each person must sign in once after email auth is enabled. In Supabase SQL Editor, find their auth user UUIDs in Authentication → Users and insert them into `public.team_admins` with roles `founder` and `co_founder`. Never allow users to assign themselves admin roles.
+
+
+### Community display names
+The optional public nickname feature is introduced by migration `20261126000300_community_display_names.sql`. Apply this migration in the Supabase SQL Editor before enabling member sign-in. Members can choose a 2–24 character public nickname; otherwise the generated Froggy ID remains visible. Email addresses are never shown. The UI explicitly warns members not to use full names, phone numbers or private details.

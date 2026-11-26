@@ -69,16 +69,20 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     if (profile?.id === user.id) return profile;
     if (profilePromise) return profilePromise;
     profilePromise = (async () => {
-      const { data: existing, error: lookupError } = await db.from("community_profiles").select("id,handle").eq("id", user.id).maybeSingle();
+      const { data: existing, error: lookupError } = await db.from("community_profiles").select("id,handle,display_name").eq("id", user.id).maybeSingle();
       if (lookupError) throw lookupError;
       if (existing) profile = existing;
       else {
         const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,12);
-        const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle").single();
+        const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle,display_name").single();
         if (error) throw error;
         profile = data;
       }
-      setMessage(authStatus, "Signed in securely. Your email stays private; public posts use an automatic Froggy ID.");
+      setMessage(authStatus, "Signed in securely. Your email stays private; choose a public nickname below.");
+      const profileSettings = $("community-profile-settings");
+      if (profileSettings) profileSettings.hidden = false;
+      const displayNameInput = $("community-display-name");
+      if (displayNameInput) displayNameInput.value = profile.display_name || "";
       $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n) => n.disabled = false);
       $("meme-submit") && ($("meme-submit").disabled = false);
       setStatus("CONNECTED · EMAIL VERIFIED");
@@ -131,7 +135,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     rows.forEach((row, i) => {
       const item = el("div","leaderboard-row");
       item.append(el("span","rank",String(i+1).padStart(2,"0")));
-      const person = el("div"); person.append(el("strong","", "@"+row.handle), el("small","", (row.approved_posts||0)+" posts · "+(row.approved_missions||0)+" missions"));
+      const person = el("div"); person.append(el("strong","", row.display_name || "@"+row.handle), el("small","", (row.approved_posts||0)+" posts · "+(row.approved_missions||0)+" missions"));
       item.append(person, el("b","", (row.points||0)+" PTS")); box.append(item);
     });
   }
@@ -141,10 +145,10 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     if (!rows?.length) { box.append(el("div","hub-empty","No approved posts yet. Share an idea or create a meme.")); return; }
     for (const row of rows) {
       const card = el("article","community-post");
-      const handle = row.community_profiles?.handle || "Swamp member";
+      const author = row.community_profiles?.display_name || (row.community_profiles?.handle ? "@"+row.community_profiles.handle : "Swamp member");
       const top = el("div","community-post-head");
       top.append(el("span","",row.kind.toUpperCase()),el("time","",new Date(row.created_at).toLocaleDateString()));
-      card.append(top,el("h4","",row.title),el("p","",row.body),el("small","", "@"+handle));
+      card.append(top,el("h4","",row.title),el("p","",row.body),el("small","", author));
       if (row.image_path) {
         const { data } = await db.storage.from("community-media").createSignedUrl(row.image_path,3600);
         if (data?.signedUrl) { const img=el("img");img.src=data.signedUrl;img.alt="Community creation";img.loading="lazy";card.append(img); }
@@ -189,10 +193,10 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     const {data:mod}=await db.from("community_moderators").select("user_id").eq("user_id",user.id).maybeSingle();
     if(!mod)return;
     $("community-moderation").hidden=false;
-    const box=$("community-pending");const {data,error}=await db.from("community_posts").select("id,kind,title,body,created_at,community_profiles(handle)").eq("status","pending").order("created_at").limit(30);
+    const box=$("community-pending");const {data,error}=await db.from("community_posts").select("id,kind,title,body,created_at,community_profiles(handle,display_name)").eq("status","pending").order("created_at").limit(30);
     box.replaceChildren();if(error){box.append(el("p","",error.message));return}
     if(!data?.length){box.append(el("div","hub-empty","The post queue is clear."));}
-    data.forEach(post=>{const item=el("div","moderation-item"),copy=el("div");copy.append(el("strong","",post.title+" · @"+(post.community_profiles?.handle||"member")),el("p","",post.body));const actions=el("div","moderation-actions");for(const [label,value] of [["APPROVE","approved"],["REJECT","rejected"]]){const b=el("button",value==="approved"?"approve":"",label);b.type="button";b.addEventListener("click",async()=>{b.disabled=true;const {error}=await db.from("community_posts").update({status:value}).eq("id",post.id);if(error){setMessage(postStatus,error.message,true);b.disabled=false}else{item.remove();refreshAll()}});actions.append(b)}item.append(copy,actions);box.append(item)});
+    data.forEach(post=>{const item=el("div","moderation-item"),copy=el("div");copy.append(el("strong","",post.title+" · @"+(post.community_profiles?.display_name||("@"+(post.community_profiles?.handle||"member")))),el("p","",post.body));const actions=el("div","moderation-actions");for(const [label,value] of [["APPROVE","approved"],["REJECT","rejected"]]){const b=el("button",value==="approved"?"approve":"",label);b.type="button";b.addEventListener("click",async()=>{b.disabled=true;const {error}=await db.from("community_posts").update({status:value}).eq("id",post.id);if(error){setMessage(postStatus,error.message,true);b.disabled=false}else{item.remove();refreshAll()}});actions.append(b)}item.append(copy,actions);box.append(item)});
     await loadReportQueue();
     await loadMissionQueue();
   }
@@ -234,13 +238,27 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   }
   async function refreshAll() {
     const [leader,feed]=await Promise.all([
-      db.from("community_leaderboard").select("handle,points,approved_posts,approved_missions").order("points",{ascending:false}).limit(5),
-      db.from("community_posts").select("id,kind,title,body,image_path,created_at,community_profiles(handle),community_post_likes(count)").eq("status","approved").order("created_at",{ascending:false}).limit(12)
+      db.from("community_leaderboard").select("handle,display_name,points,approved_posts,approved_missions").order("points",{ascending:false}).limit(5),
+      db.from("community_posts").select("id,kind,title,body,image_path,created_at,community_profiles(handle,display_name),community_post_likes(count)").eq("status","approved").order("created_at",{ascending:false}).limit(12)
     ]);
     if(!leader.error)renderLeaderboard(leader.data);else setMessage(postStatus,"Leaderboard: "+leader.error.message,true);
     if(!feed.error)await renderFeed(feed.data);else setMessage(postStatus,"Community feed: "+feed.error.message,true);
     await Promise.all([loadEvents(),loadPolls(),loadMissions(),loadModeration(),loadBuyerLeaderboard()]);
   }
+  $("community-profile-save")?.addEventListener("click",async()=>{
+    const input=$("community-display-name"),btn=$("community-profile-save"),value=(input?.value||"").trim();
+    if(value && (value.length<2||value.length>24||/[<>]/.test(value))){setMessage($("community-profile-status"),"Use 2–24 characters and avoid angle brackets.",true);return}
+    if(!user||!profile){setMessage($("community-profile-status"),"Sign in first to update your public name.",true);return}
+    btn.disabled=true;
+    try{
+      const {data,error}=await db.from("community_profiles").update({display_name:value||null}).eq("id",user.id).select("id,handle,display_name").single();
+      if(error)throw error;
+      profile=data;
+      setMessage($("community-profile-status"),value?"Your public name has been saved.":"Your automatic Froggy ID will be shown.");
+      await refreshAll();
+    }catch(error){setMessage($("community-profile-status"),error.message||"Could not save your public name.",true)}
+    finally{btn.disabled=false}
+  });
   $("community-profile-form")?.addEventListener("submit",async event=>{event.preventDefault();const btn=event.currentTarget.querySelector("button");btn.disabled=true;try{await sendLoginLink($("community-email").value)}catch(error){setMessage(authStatus,error.message||"Could not send the sign-in email.",true);setStatus("EMAIL SIGN-IN ERROR")}finally{btn.disabled=false}});
   $("community-post-form")?.addEventListener("submit",async event=>{event.preventDefault();const form=event.currentTarget,btn=form.querySelector("button[type=submit]");btn.disabled=true;try{await submitPost({kind:$("community-post-kind").value,title:$("community-post-title").value,body:$("community-post-body").value,file:$("community-post-image").files?.[0]});form.reset();setMessage(postStatus,"Submitted for moderation. It will appear publicly after approval.")}catch(error){setMessage(postStatus,error.message,true)}finally{btn.disabled=false}});
   $("meme-submit")?.addEventListener("click",async()=>{const btn=$("meme-submit");btn.disabled=true;try{const canvas=$("meme-canvas");const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw new Error("Could not export meme.");await submitPost({kind:"meme",title:$("meme-top").value.trim()||"ChillFrog meme",body:$("meme-bottom").value.trim()||"Community meme",file:new File([blob],"chillfrog-meme.png",{type:"image/png"})});setMessage(postStatus,"Meme sent for moderation. Join the community if you have not already.");$("community-hub")?.scrollIntoView({behavior:"smooth"})}catch(error){setMessage(postStatus,error.message,true);$("community-hub")?.scrollIntoView({behavior:"smooth"})}finally{btn.disabled=false}});
