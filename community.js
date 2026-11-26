@@ -36,25 +36,35 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     try { const u = new URL(raw); return ["https:","http:"].includes(u.protocol) ? u.href : ""; }
     catch { return ""; }
   }
-  async function ensureSession() {
-    const { data, error } = await db.auth.getSession();
-    if (error) throw error;
-    if (data.session?.user) { user = data.session.user; return user; }
-    const result = await db.auth.signInAnonymously();
-    if (result.error) throw result.error;
-    user = result.data.user;
-    return user;
-  }
-  async function join(handle) {
-    if (!/^[A-Za-z0-9_]{3,18}$/.test(handle)) throw new Error("Use 3–18 letters, numbers or underscores.");
-    await ensureSession();
-    const { data, error } = await db.from("community_profiles").upsert({ id: user.id, handle }, { onConflict: "id" }).select("id,handle").single();
-    if (error) throw error;
-    profile = data;
-    setMessage(authStatus, "You're in as @" + data.handle + ". Your nickname is public; your account remains anonymous.");
+  async function ensureProfile(activeUser) {
+    user = activeUser;
+    if (!user || user.is_anonymous) return;
+    const { data: existing, error: lookupError } = await db.from("community_profiles").select("id,handle").eq("id", user.id).maybeSingle();
+    if (lookupError) throw lookupError;
+    if (existing) profile = existing;
+    else {
+      const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,8);
+      const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle").single();
+      if (error) throw error;
+      profile = data;
+    }
+    setMessage(authStatus, "Signed in securely. Your email stays private; public posts use an automatic Froggy ID.");
     $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n) => n.disabled = false);
     $("meme-submit") && ($("meme-submit").disabled = false);
+    setStatus("CONNECTED · EMAIL VERIFIED");
     await refreshAll();
+  }
+  async function sendLoginLink(email) {
+    const cleanEmail = email.trim().toLowerCase();
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(cleanEmail)) throw new Error("Enter a valid email address.");
+    const { data: current } = await db.auth.getSession();
+    if (current.session?.user?.is_anonymous) await db.auth.signOut();
+    const { error } = await db.auth.signInWithOtp({
+      email: cleanEmail,
+      options: { emailRedirectTo: window.location.origin + window.location.pathname }
+    });
+    if (error) throw error;
+    setMessage(authStatus, "Check your inbox. We sent you a secure sign-in link. Your email will never appear publicly.");
   }
   async function uploadImage(file) {
     if (!file) return null;
@@ -157,10 +167,15 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     if(!feed.error)await renderFeed(feed.data);else setMessage(postStatus,"Community feed: "+feed.error.message,true);
     await Promise.all([loadEvents(),loadPolls(),loadMissions(),loadModeration(),loadBuyerLeaderboard()]);
   }
-  $("community-profile-form")?.addEventListener("submit",async event=>{event.preventDefault();const btn=event.currentTarget.querySelector("button");btn.disabled=true;try{await join($("community-handle").value.trim());setStatus("CONNECTED · GUEST PROFILE")}catch(error){const msg=String(error.message||error);setMessage(authStatus,/anonymous.*(disabled|not enabled)|anonymous_provider_disabled/i.test(msg)?"The project is connected. One setup step remains: enable Anonymous Sign-Ins in Supabase → Authentication → Sign In / Providers.":msg,true);setStatus("SIGN-IN SETUP REQUIRED")}finally{btn.disabled=false}});
+  $("community-profile-form")?.addEventListener("submit",async event=>{event.preventDefault();const btn=event.currentTarget.querySelector("button");btn.disabled=true;try{await sendLoginLink($("community-email").value)}catch(error){setMessage(authStatus,error.message||"Could not send the sign-in email.",true);setStatus("EMAIL SIGN-IN ERROR")}finally{btn.disabled=false}});
   $("community-post-form")?.addEventListener("submit",async event=>{event.preventDefault();const form=event.currentTarget,btn=form.querySelector("button[type=submit]");btn.disabled=true;try{await submitPost({kind:$("community-post-kind").value,title:$("community-post-title").value,body:$("community-post-body").value,file:$("community-post-image").files?.[0]});form.reset();setMessage(postStatus,"Submitted for moderation. It will appear publicly after approval.")}catch(error){setMessage(postStatus,error.message,true)}finally{btn.disabled=false}});
   $("meme-submit")?.addEventListener("click",async()=>{const btn=$("meme-submit");btn.disabled=true;try{const canvas=$("meme-canvas");const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw new Error("Could not export meme.");await submitPost({kind:"meme",title:$("meme-top").value.trim()||"ChillFrog meme",body:$("meme-bottom").value.trim()||"Community meme",file:new File([blob],"chillfrog-meme.png",{type:"image/png"})});setMessage(postStatus,"Meme sent for moderation. Join the community if you have not already.");$("community-hub")?.scrollIntoView({behavior:"smooth"})}catch(error){setMessage(postStatus,error.message,true);$("community-hub")?.scrollIntoView({behavior:"smooth"})}finally{btn.disabled=false}});
   setStatus("READY · JOIN TO PARTICIPATE");
-  db.auth.onAuthStateChange((_event,session)=>{user=session?.user||null});
+  db.auth.onAuthStateChange((_event,session)=>{
+    user=session?.user||null;
+    if (user && !user.is_anonymous) ensureProfile(user).catch(error=>setMessage(authStatus,error.message,true));
+    else if (!user) { profile=null; $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n)=>n.disabled=true); $("meme-submit") && ($("meme-submit").disabled=true); }
+  });
+  db.auth.getSession().then(({data,error})=>{if(error)throw error;if(data.session?.user&&!data.session.user.is_anonymous)ensureProfile(data.session.user)}).catch(error=>setMessage(authStatus,error.message,true));
   refreshAll().catch(error=>setMessage(postStatus,error.message,true));
 })();
