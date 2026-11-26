@@ -10,6 +10,11 @@ Lightweight static community site hosted on GitHub Pages.
 - Supabase community: private email magic-link sign-in, automatically generated public IDs, moderated posts, likes, reports, polls, events, missions and contributor leaderboard.
 - Separate on-chain buyer leaderboard; requires a trusted indexer before it can show verified buys.
 
+## Froggy World
+- `froggy-world.html` is the interactive world hub with six zones, a playable Lily Hop mini-game, browser-local progress, four collectible-style badges, and public read-only mission/event listings from Supabase.
+- The current game score, streak and badges are local to the visitor browser. They do not grant public points, tokens, NFTs, or financial rewards.
+- Card Cavern, Battle Bay and the AI Companion are clearly marked in development; do not present them as live until their backend, moderation and security requirements are completed.
+
 ## Hosting
 GitHub Pages: Settings → Pages → Deploy from branch → `main` → `/(root)`.
 
