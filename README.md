@@ -21,7 +21,7 @@ Applied database migrations:
 - `20261126000200_chillfrog_security_hardening.sql`
 
 ### Required launch configuration
-1. In Supabase Authentication → Sign In / Providers, enable Anonymous Sign-Ins. The frontend uses anonymous accounts plus a public nickname; it does not collect email addresses.
+1. Email passwordless sign-in is used. Confirm the Email provider is enabled in Supabase Authentication → Sign In / Providers, turn on email confirmations, and add `https://rudbdhduebejdjdvdj-rgb.github.io/ChillFrog/` to the Auth URL Configuration redirect allow list. The frontend sends a one-time magic link; email addresses remain private and public profiles use an automatically generated Froggy ID.
 2. Configure CAPTCHA / abuse protection before opening public posting.
 3. Add the owner's auth user ID to `public.community_moderators` from the Supabase SQL editor. Moderators can approve/reject posts and manage events, polls and missions.
 4. Configure a trusted Solana transaction indexer and a server-side API secret before populating `public.token_buyer_leaderboard`. Do not calculate buyer rankings from holder counts or user-submitted claims.
