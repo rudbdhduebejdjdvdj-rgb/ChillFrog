@@ -24,7 +24,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   const db = createClient(config.url, config.publishableKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
-  let user = null, profile = null;
+  let user = null, profile = null, profilePromise = null;
 
   function el(tag, cls, text) {
     const node = document.createElement(tag);
@@ -39,20 +39,27 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
   async function ensureProfile(activeUser) {
     user = activeUser;
     if (!user || user.is_anonymous) return;
-    const { data: existing, error: lookupError } = await db.from("community_profiles").select("id,handle").eq("id", user.id).maybeSingle();
-    if (lookupError) throw lookupError;
-    if (existing) profile = existing;
-    else {
-      const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,8);
-      const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle").single();
-      if (error) throw error;
-      profile = data;
-    }
-    setMessage(authStatus, "Signed in securely. Your email stays private; public posts use an automatic Froggy ID.");
-    $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n) => n.disabled = false);
-    $("meme-submit") && ($("meme-submit").disabled = false);
-    setStatus("CONNECTED · EMAIL VERIFIED");
-    await refreshAll();
+    if (profile?.id === user.id) return profile;
+    if (profilePromise) return profilePromise;
+    profilePromise = (async () => {
+      const { data: existing, error: lookupError } = await db.from("community_profiles").select("id,handle").eq("id", user.id).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (existing) profile = existing;
+      else {
+        const handle = "Frog" + crypto.randomUUID().replace(/-/g,"").slice(0,8);
+        const { data, error } = await db.from("community_profiles").insert({ id: user.id, handle }).select("id,handle").single();
+        if (error) throw error;
+        profile = data;
+      }
+      setMessage(authStatus, "Signed in securely. Your email stays private; public posts use an automatic Froggy ID.");
+      $("community-post-form")?.querySelectorAll("input,select,textarea,button").forEach((n) => n.disabled = false);
+      $("meme-submit") && ($("meme-submit").disabled = false);
+      setStatus("CONNECTED · EMAIL VERIFIED");
+      await refreshAll();
+      return profile;
+    })();
+    try { return await profilePromise; }
+    finally { profilePromise = null; }
   }
   async function sendLoginLink(email) {
     const cleanEmail = email.trim().toLowerCase();
