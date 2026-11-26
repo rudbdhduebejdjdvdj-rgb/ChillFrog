@@ -110,6 +110,13 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
       actions.append(like,report);card.append(actions);box.append(card);
     }
   }
+  async function loadBuyerLeaderboard() {
+    const box=$("buyer-leaderboard");if(!box)return;
+    const {data,error}=await db.from("token_buyer_leaderboard").select("wallet_address,buy_volume_usd,buy_count").eq("period","24h").order("buy_volume_usd",{ascending:false}).limit(5);
+    box.replaceChildren();
+    if(error||!data?.length){box.append(el("span","buyer-empty","Live buyer ranking activates after the Birdeye server sync is configured."));return}
+    data.forEach((row,i)=>{const item=el("div","buyer-chip");const wallet=row.wallet_address;const short=wallet.slice(0,4)+"…"+wallet.slice(-4);item.append(el("b","",String(i+1).padStart(2,"0")),el("span","",short),el("strong","", "$"+Number(row.buy_volume_usd).toLocaleString("en-US",{maximumFractionDigits:2})));const copy=el("button","","COPY");copy.type="button";copy.addEventListener("click",()=>navigator.clipboard?.writeText(wallet));item.append(copy);box.append(item)});
+  }
   async function loadEvents() {
     const box=$("community-events");if(!box)return;
     const {data,error}=await db.from("community_events").select("id,title,description,event_type,starts_at,url").eq("status","published").gte("starts_at",new Date().toISOString()).order("starts_at").limit(5);
@@ -148,7 +155,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
     ]);
     if(!leader.error)renderLeaderboard(leader.data);else setMessage(postStatus,"Leaderboard: "+leader.error.message,true);
     if(!feed.error)await renderFeed(feed.data);else setMessage(postStatus,"Community feed: "+feed.error.message,true);
-    await Promise.all([loadEvents(),loadPolls(),loadMissions(),loadModeration()]);
+    await Promise.all([loadEvents(),loadPolls(),loadMissions(),loadModeration(),loadBuyerLeaderboard()]);
   }
   $("community-profile-form")?.addEventListener("submit",async event=>{event.preventDefault();const btn=event.currentTarget.querySelector("button");btn.disabled=true;try{await join($("community-handle").value.trim());setStatus("CONNECTED · GUEST PROFILE")}catch(error){setMessage(authStatus,error.message,true);setStatus("SIGN-IN UNAVAILABLE")}finally{btn.disabled=false}});
   $("community-post-form")?.addEventListener("submit",async event=>{event.preventDefault();const form=event.currentTarget,btn=form.querySelector("button[type=submit]");btn.disabled=true;try{await submitPost({kind:$("community-post-kind").value,title:$("community-post-title").value,body:$("community-post-body").value,file:$("community-post-image").files?.[0]});form.reset();setMessage(postStatus,"Submitted for moderation. It will appear publicly after approval.")}catch(error){setMessage(postStatus,error.message,true)}finally{btn.disabled=false}});
