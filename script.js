@@ -138,29 +138,72 @@ document.getElementById("year").textContent=new Date().getFullYear();const butto
 })();
 
 
-// Leaf combustion: glowing edge, rising smoke and gravity-driven ash that reveals the page from top to bottom.
+// Falling ash draws the real text glyphs of every section, then reveals the live DOM.
 (function(){
  const root=document.documentElement,intro=document.getElementById("leaf-intro"),stage=intro?.querySelector(".leaf-stage"),canvas=document.getElementById("ash-canvas");
  if(!intro||!stage||!canvas)return;
- if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove();root.classList.remove("ash-loading");return;}
- const ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,particles=[],embers=[],smoke=[],start=0,raf=0,built=false;
- const rand=(a,b)=>a+Math.random()*(b-a);
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove();root.classList.remove("ash-loading");return;}
+ const ctx=canvas.getContext("2d"),sample=document.createElement("canvas"),sctx=sample.getContext("2d",{willReadFrequently:true});
+ let w=0,h=0,dpr=1,start=0,raf=0,smoke=[],embers=[],particles=[];
+ const rand=(a,b)=>a+Math.random()*(b-a),sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
  function resize(){dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
- function makeParticles(){const r=stage.getBoundingClientRect(),cx=r.left+r.width*.5,cy=r.top+r.height*.48,n=Math.min(2200,Math.max(900,Math.floor(w*h/330)));for(let i=0;i<n;i++){const a=rand(0,Math.PI*2),rad=Math.sqrt(Math.random()),x=cx+Math.cos(a)*r.width*.47*rad,y=cy+Math.sin(a)*r.height*.46*rad;particles.push({x,y,ox:x,oy:y,vx:rand(-34,34),vy:rand(12,75),g:rand(34,105),size:rand(.45,2.4),rot:rand(0,6.28),spin:rand(-4,4),alpha:rand(.25,.88),delay:rand(0,1.7),settled:false,ember:Math.random()<.12})}}
- function pageBuild(){if(built)return;built=true;root.classList.remove("ash-loading");root.classList.add("ash-built");const sections=[...document.querySelectorAll("header,main>section,main>.buyers-strip,footer,.disclaimer")];sections.forEach((el,i)=>el.style.setProperty("--ash-delay",(i*.24)+"s"))}
- function puff(x,y,amount){for(let i=0;i<amount;i++)smoke.push({x:x+rand(-12,12),y:y+rand(-8,8),vx:rand(-13,13),vy:rand(-34,-9),life:rand(1.3,2.8),age:0,size:rand(10,28),alpha:rand(.025,.09)})}
- function flame(x,y,scale,age){const flicker=.75+Math.random()*.55;ctx.save();ctx.globalCompositeOperation="screen";for(let k=0;k<3;k++){const fw=(5+k*5)*scale*flicker,fh=(18+k*17)*scale*flicker,ox=rand(-10,10)*scale,oy=rand(-8,8)*scale;const g=ctx.createLinearGradient(x+ox,y+fh,x+ox,y-fh);g.addColorStop(0,"rgba(255,48,8,0)");g.addColorStop(.35,"rgba(255,73,14,.48)");g.addColorStop(.72,"rgba(255,166,42,.56)");g.addColorStop(1,"rgba(255,229,154,0)");ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(x+ox-fw,y);ctx.quadraticCurveTo(x+ox-fw*.75,y-fh*.5,x+ox,y-fh);ctx.quadraticCurveTo(x+ox+fw*.9,y-fh*.45,x+ox+fw,y);ctx.closePath();ctx.fill()}ctx.restore()}
- function draw(t){if(!start)start=t;const time=(t-start)/1000;ctx.clearRect(0,0,w,h);const r=stage.getBoundingClientRect(),cx=r.left+r.width*.5,cy=r.top+r.height*.52;
- // Flickering fire tongues crawl around the leaf and smoke rolls upward.
- if(time>1&&time<6.15){for(let i=0;i<30;i++){const a=(i/30)*Math.PI*2+Math.sin(time*1.4)*.025,x=cx+Math.cos(a)*r.width*(.37+rand(-.025,.025)),y=cy+Math.sin(a)*r.height*(.38+rand(-.025,.025));flame(x,y,rand(.48,1.05),time)}if(Math.random()<.7)puff(cx+rand(-r.width*.28,r.width*.28),cy-r.height*.24,2)}
- // Fine ash falls with gravity, swirls in the air and settles along the bottom edge.
- for(const p of particles){if(time<p.delay+2.25)continue;if(!p.settled){const dt=1/60;p.vy+=p.g*dt;p.vx+=Math.sin(time*1.6+p.rot)*.28;p.x+=p.vx*dt;p.y+=p.vy*dt;p.rot+=p.spin*dt;if(p.y>h-rand(0,8)){p.y=h-rand(0,5);p.settled=true;p.vx=0;p.vy=0}}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.globalAlpha=p.alpha*(p.settled ? .82 : 1);ctx.fillStyle=p.ember?(Math.random()>.5?"#ff8c35":"#ffc06a"):(Math.random()>.5?"#d3cec2":"#77796d");ctx.beginPath();ctx.ellipse(0,0,p.size*(p.ember?1.25:.8),p.size*(p.ember?2.1:1.2),0,0,Math.PI*2);ctx.fill();if(p.ember){ctx.shadowBlur=9;ctx.shadowColor="#ff7a27";ctx.fillStyle="#ffb15a";ctx.fillRect(-.6,-p.size*2,1.2,p.size*3)}ctx.restore()}
- // Smoke has soft volume and dissipates as it rises.
- for(let i=smoke.length-1;i>=0;i--){const s=smoke[i];s.age+=1/60;s.x+=s.vx/60+Math.sin(time*1.1+i)*.12;s.y+=s.vy/60;const q=s.age/s.life;if(q>=1){smoke.splice(i,1);continue}ctx.globalAlpha=s.alpha*(1-q);const g=ctx.createRadialGradient(s.x,s.y,1,s.x,s.y,s.size*(.5+q));g.addColorStop(0,"rgba(36,39,32,.3)");g.addColorStop(1,"rgba(36,39,32,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(s.x,s.y,s.size*(.5+q),0,Math.PI*2);ctx.fill()}
- ctx.globalAlpha=1;
- // Once the ash has fallen, the real page is revealed in stacked top-to-bottom passes.
- if(time>5.1&&!built)pageBuild();
- if(time<8.8)raf=requestAnimationFrame(draw);else{pageBuild();ctx.clearRect(0,0,w,h);intro.remove()}
+ function targetsFor(el){
+  const selector="h1,h2,h3,h4,p,a,button,.pill,.micro,.orbit-label,li,label";
+  return [...el.querySelectorAll(selector)].filter(node=>node.children.length===0&&node.textContent.trim()&&node.getBoundingClientRect().width>0);
  }
- resize();makeParticles();raf=requestAnimationFrame(draw);addEventListener("resize",resize,{passive:true});
+ function glyphPoints(node){
+  const rect=node.getBoundingClientRect();if(rect.bottom<0||rect.top>h||rect.width<4||rect.height<4)return [];
+  const style=getComputedStyle(node),font=style.font||[style.fontStyle,style.fontVariant,style.fontWeight,style.fontSize,style.fontFamily].join(" ");
+  const text=node.innerText||node.textContent||"",fontSize=parseFloat(style.fontSize)||16,lineHeight=parseFloat(style.lineHeight)||fontSize*1.25;
+  const maxW=Math.max(8,Math.min(rect.width,1200)),pad=3,lines=[];
+  sample.width=Math.ceil(maxW+pad*2);sample.height=Math.ceil(Math.max(rect.height+pad*2,lineHeight+pad*2));
+  sctx.clearRect(0,0,sample.width,sample.height);sctx.font=font;sctx.textBaseline="top";sctx.fillStyle="#fff";
+  const words=text.replace(/\s+/g," ").trim().split(" ");let line="",y=pad;
+  for(const word of words){const test=line?line+" "+word:word;if(sctx.measureText(test).width>maxW&&line){sctx.fillText(line,pad,y);lines.push({text:line,y});line=word;y+=lineHeight}else line=test}
+  if(line){sctx.fillText(line,pad,y);lines.push({text:line,y})}
+  const image=sctx.getImageData(0,0,sample.width,sample.height).data,step=fontSize>25?3:2,pts=[];
+  for(let yy=0;yy<sample.height;yy+=step)for(let xx=0;xx<sample.width;xx+=step){if(image[(yy*sample.width+xx)*4+3]>100)pts.push({x:rect.left+xx-pad,y:rect.top+yy-pad})}
+  const cap=fontSize>30?260:fontSize>18?150:75,stride=Math.max(1,Math.ceil(pts.length/cap));
+  return pts.filter((_,i)=>i%stride===0).map(pt=>({x:pt.x,y:pt.y,size:rand(.55,1.35),rot:rand(-.4,.4)}));
+ }
+ function makeGlyphParticles(elements){
+  const pts=[];for(const node of elements)pts.push(...glyphPoints(node));
+  return pts;
+ }
+ function startAshStream(points){
+  particles=points.map((p,i)=>({x:rand(0,w),y:rand(-h*.75,-10),tx:p.x,ty:p.y,vx:rand(-22,22),vy:rand(35,115),size:p.size,rot:p.rot,alpha:rand(.5,.95),delay:rand(0,.42),age:0,life:rand(.85,1.45),settled:false}));
+  return new Promise(resolve=>{let done=false;const finish=()=>{if(!done){done=true;resolve()}};const began=performance.now();function frame(now){const elapsed=(now-began)/1000;ctx.clearRect(0,0,w,h);let moving=0;
+    for(const p of particles){const t=elapsed-p.delay;if(t<0){moving++;continue}const q=Math.min(1,t/p.life),ease=q*q*(3-2*q);if(q<1)moving++;const drift=Math.sin(t*3+p.tx*.01)*Math.sin(q*Math.PI)*14;
+      const x=p.x+(p.tx-p.x)*ease+drift,y=p.y+(p.ty-p.y)*ease+Math.sin(t*5+p.ty)*2;
+      ctx.save();ctx.globalAlpha=p.alpha*(q>.94?Math.max(0,(1-q)/.06):1);ctx.translate(x,y);ctx.rotate(p.rot+t*1.8);ctx.fillStyle=Math.random()>.16?"#c9c4b8":"#f1a24d";ctx.beginPath();ctx.ellipse(0,0,p.size,p.size*rand(1.1,2.1),0,0,Math.PI*2);ctx.fill();ctx.restore()}
+    if(elapsed<1.95&&moving>0)raf=requestAnimationFrame(frame);else{ctx.clearRect(0,0,w,h);finish()}
+   }raf=requestAnimationFrame(frame);setTimeout(finish,2300)});
+ }
+ function emberSmoke(x,y){for(let i=0;i<20;i++)smoke.push({x:x+rand(-30,30),y:y+rand(-20,20),vx:rand(-15,15),vy:rand(-32,-8),life:rand(1.2,2.4),age:0,size:rand(9,24),alpha:rand(.025,.08)})}
+ function burnFrame(t){if(!start)start=t;const time=(t-start)/1000;ctx.clearRect(0,0,w,h);const r=stage.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  if(time<5.9){for(let i=0;i<24;i++){const a=i/24*Math.PI*2+time*.12,x=cx+Math.cos(a)*r.width*.39,y=cy+Math.sin(a)*r.height*.37;ctx.save();ctx.globalCompositeOperation="screen";const g=ctx.createRadialGradient(x,y,0,x,y,rand(18,48));g.addColorStop(0,"rgba(255,211,117,.25)");g.addColorStop(.3,"rgba(255,95,21,.23)");g.addColorStop(1,"rgba(255,65,8,0)");ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(x,y,rand(5,12),rand(18,45),rand(-.3,.3),0,Math.PI*2);ctx.fill();ctx.restore()}if(Math.random()<.5)emberSmoke(cx+rand(-r.width*.3,r.width*.3),cy)}
+  for(let i=smoke.length-1;i>=0;i--){const p=smoke[i];p.age+=1/60;p.x+=p.vx/60;p.y+=p.vy/60;if(p.age>p.life){smoke.splice(i,1);continue}ctx.globalAlpha=p.alpha*(1-p.age/p.life);const g=ctx.createRadialGradient(p.x,p.y,1,p.x,p.y,p.size);g.addColorStop(0,"rgba(36,39,32,.25)");g.addColorStop(1,"rgba(36,39,32,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
+  if(time<6.2)raf=requestAnimationFrame(burnFrame);else{ctx.clearRect(0,0,w,h);cancelAnimationFrame(raf)}
+ }
+ async function buildPage(){
+  const header=document.querySelector("header"),sections=[...document.querySelectorAll("main>section,main>.buyers-strip")],footer=document.querySelector("footer"),sequence=[header,...sections,footer].filter(Boolean);
+  root.classList.remove("ash-loading");root.classList.add("ash-building");
+  for(const block of sequence){
+   window.scrollTo({top:Math.max(0,block.getBoundingClientRect().top+scrollY-18),behavior:"instant"});
+   block.classList.add("ash-section-active");
+   const nodes=targetsFor(block);nodes.forEach(n=>n.classList.add("ash-copy-hidden"));
+   await sleep(240);
+   const glyphs=makeGlyphParticles(nodes);
+   if(glyphs.length)await startAshStream(glyphs);
+   nodes.forEach(n=>{n.classList.remove("ash-copy-hidden");n.classList.add("ash-copy-visible")});
+   await sleep(130);
+  }
+  // Final downward ash fall across the last viewport, then hand control back to the visitor.
+  const endY=Math.max(0,document.documentElement.scrollHeight-innerHeight);window.scrollTo({top:endY,behavior:"smooth"});
+  const end=performance.now()+1100;while(performance.now()<end)await sleep(40);
+  ctx.clearRect(0,0,w,h);intro.remove();root.classList.remove("ash-building");root.classList.add("ash-built");window.scrollTo({top:0,behavior:"smooth"});
+ }
+ resize();raf=requestAnimationFrame(burnFrame);
+ setTimeout(()=>{cancelAnimationFrame(raf);ctx.clearRect(0,0,w,h);buildPage().catch(()=>{root.classList.remove("ash-loading","ash-building");intro.remove()})},5600);
+ addEventListener("resize",resize,{passive:true});
 })();
