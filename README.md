@@ -4,6 +4,7 @@ Lightweight static community site hosted on GitHub Pages.
 
 ## Frontend
 - Compact CFROG live market card via Jupiter Tokens API v2 (60-second refresh).
+- Dedicated pages: `the-swamp.html` for community and `create.html` for the meme studio.
 - Jupiter swap widget with the official CFROG mint.
 - Local meme generator with PNG export; uploaded source images remain in the browser.
 - Supabase community: private email magic-link sign-in, automatically generated public IDs, moderated posts, likes, reports, polls, events, missions and contributor leaderboard.
